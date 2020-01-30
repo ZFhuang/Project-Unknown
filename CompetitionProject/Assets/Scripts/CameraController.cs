@@ -15,24 +15,39 @@ public class CameraController : MonoBehaviour
     private PLATFORM platform = PLATFORM.PHONE;
 
     //Camera move speed
-    public float speed = 0.25f;
+    private float speed;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //init
         mainCamera = this.GetComponent<Camera>();
+        if (!PlayerPrefs.HasKey("speed"))
+        {
+            Debug.Log("init speed!");
+            PlayerPrefs.SetFloat("speed", 0.5f);
+            speed = 0.5f;
+        }
+        else if (PlayerPrefs.HasKey("speed"))
+        {
+            Debug.Log("load speed!");
+            speed = PlayerPrefs.GetFloat("speed");
+        }
 
         //Use preprocessor to get using platform
-#if UNITY_EDITOR || UNITY_STANDALONE
-        platform=0;
-#elif UNITY_IPHONE || UNITY_ANDROID
-        platform=1;
+#if UNITY_EDITOR
+        platform = PLATFORM.STANDALONE;
+        Debug.Log("PLATFORM.STANDALONE");
+#endif
+
+#if UNITY_IPHONE
+        platform = PLATFORM.PHONE;
+        Debug.Log("PLATFORM.PHONE");
 #endif
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Choose capable moving method
         if (platform == PLATFORM.STANDALONE)
@@ -67,9 +82,11 @@ public class CameraController : MonoBehaviour
         {
             Vector3 p = mainCamera.transform.position;
             //Move X
-            Vector3 p1 = p - mainCamera.transform.right * Input.GetAxisRaw("Mouse X") * speed * Time.timeScale;
+            Vector3 p1 = p - mainCamera.transform.right *
+                Input.GetAxisRaw("Mouse X") * speed * Time.timeScale;
             //Move Y
-            Vector3 p2 = p1 - mainCamera.transform.up * Input.GetAxisRaw("Mouse Y") * speed * Time.timeScale;
+            Vector3 p2 = p1 - mainCamera.transform.up *
+                Input.GetAxisRaw("Mouse Y") * speed * Time.timeScale;
             //Set transform
             mainCamera.transform.position = p2;
         }
@@ -83,7 +100,7 @@ public class CameraController : MonoBehaviour
         {
             Vector2 delta = Input.GetTouch(0).deltaPosition;
             //Set transform
-            mainCamera.transform.Translate(delta.x * speed, delta.y * speed, 0);
+            mainCamera.transform.Translate(-delta.x * speed, -delta.y * speed, 0);
         }
     }
 }
