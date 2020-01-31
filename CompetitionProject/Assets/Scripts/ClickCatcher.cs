@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+//Use this with EventTrigger.PointerClick
 public class ClickCatcher : MonoBehaviour
 {
     enum PLATFORM
@@ -19,7 +20,7 @@ public class ClickCatcher : MonoBehaviour
 
     public void clickEvent()
     {
-        //Call attached eventTrigger
+        //Call the eventTrigger attached
         Debug.Log("Click: "+gameObject);
         eventTrigger.OnPointerClick(new PointerEventData(eventSystem));
     }

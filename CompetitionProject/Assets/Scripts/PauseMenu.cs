@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
+    //Pause the game by setting the timeScale to 0
+    //This will make difference to FixedUpdate
     public void pauseGame()
     {
         Time.timeScale = 0f;
     }
 
+    //Resume the game by setting the timeScale to 1
     public void resumeGame()
     {
         Time.timeScale = 1f;

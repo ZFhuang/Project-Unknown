@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     }
     private PLATFORM platform = PLATFORM.PHONE;
 
-    //Camera state
+    //Camera's state machine settings
     enum STATE
     {
         SLIDE = 0,
@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
     //Camera move speed
     private float speed;
     private float zoomSpeed = 0f;
-    private float zoomScale_normal = 5f;
+    private float zoomScale_old = 5f;
     private float zoomScale_to;
     private Vector3 moveSpeed;
     private Vector3 lastPosition;
@@ -52,14 +52,16 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    //Transwrite of cameraIn
     public void cameraOut()
     {
         targetPosition = lastPosition;
-        zoomScale_to = zoomScale_normal;
+        zoomScale_to = zoomScale_old;
         camState = STATE.MOVE_ZOOM;
         mousePressing = false;
     }
 
+    //Change the state to zoom in FixedUpdate
     public void cameraIn(GameObject target)
     {
         lastPosition = Camera.main.gameObject.transform.position;
