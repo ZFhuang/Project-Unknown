@@ -85,8 +85,8 @@ public class Options : MonoBehaviour
     public void setVolume(float input)
     {
         //Remember to find out and set 
-        //the real min volume and max volume from -40db to 10db
-        mainVolume = input * 0.5f - 40;
+        //the real min volume and max volume from -20db to 0db
+        mainVolume = input /5f - 20;
         mainAudioMixer.SetFloat("MainMusicVolume", mainVolume);
 
         //Mute the sound

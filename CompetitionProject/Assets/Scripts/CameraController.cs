@@ -9,12 +9,9 @@ public class CameraController : MonoBehaviour
         STANDALONE = 0,
         PHONE = 1
     }
-
-    [SerializeField]
-    private Camera mainCamera;
-    private bool mousePressing = false;
     private PLATFORM platform = PLATFORM.PHONE;
 
+    private bool mousePressing = false;
     //Camera move speed
     private float speed;
 
@@ -32,6 +29,16 @@ public class CameraController : MonoBehaviour
             speed = PlayerPrefs.GetFloat("speed");
             Debug.Log(this.gameObject + " load speed: " + speed);
         }
+    }
+
+    public void cameraOut()
+    {
+        Camera.main.orthographicSize = 5;
+    }
+
+    public void cameraIn(GameObject target)
+    {
+        Camera.main.orthographicSize = 2;
     }
 
     // Start is called before the first frame update
@@ -62,9 +69,11 @@ public class CameraController : MonoBehaviour
 #endif
     }
 
-    // Update is called once per frame
+    //Using FixedUpdate to make sure the game will stop when timescale = 0
     private void FixedUpdate()
     {
+
+
         //Choose capable moving method
         if (platform == PLATFORM.STANDALONE)
         {
@@ -84,27 +93,27 @@ public class CameraController : MonoBehaviour
         //On mouse down
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Mouse Left DOWN!");
+            //Debug.Log("Mouse Left DOWN!");
             mousePressing = true;
         }
         //On mouse up
         if (Input.GetMouseButtonUp(0))
         {
-            Debug.Log("Mouse Left UP!");
+            //Debug.Log("Mouse Left UP!");
             mousePressing = false;
         }
         //On mouse pressing
         if (mousePressing)
         {
-            Vector3 p = mainCamera.transform.position;
+            Vector3 p = Camera.main.transform.position;
             //Move X
-            Vector3 p1 = p - mainCamera.transform.right *
-                Input.GetAxisRaw("Mouse X") * speed * Time.timeScale * 0.5f;
+            Vector3 p1 = p - Camera.main.transform.right *
+                Input.GetAxis("Mouse X") * speed * Time.timeScale * 0.5f;
             //Move Y
-            Vector3 p2 = p1 - mainCamera.transform.up *
-                Input.GetAxisRaw("Mouse Y") * speed * Time.timeScale * 0.5f;
+            Vector3 p2 = p1 - Camera.main.transform.up *
+                Input.GetAxis("Mouse Y") * speed * Time.timeScale * 0.5f;
             //Set transform
-            mainCamera.transform.position = p2;
+            Camera.main.transform.position = p2;
         }
     }
 
@@ -116,7 +125,7 @@ public class CameraController : MonoBehaviour
         {
             Vector2 delta = Input.GetTouch(0).deltaPosition;
             //Set transform
-            mainCamera.transform.Translate(-delta.x * speed /50f, -delta.y * speed / 50f, 0);
+            Camera.main.transform.Translate(-delta.x * speed / 50f, -delta.y * speed / 50f, 0);
         }
     }
 }
