@@ -24,9 +24,4 @@ public class PauseMenu : MonoBehaviour
         //quit
         Application.Quit();
     }
-
-    private void Update()
-    {
-
-    }
 }

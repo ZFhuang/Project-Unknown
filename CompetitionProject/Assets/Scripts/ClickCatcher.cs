@@ -19,12 +19,13 @@ public class ClickCatcher : MonoBehaviour
 
     public void clickEvent()
     {
-        Debug.Log(gameObject);
+        //Call attached eventTrigger
+        Debug.Log("Click: "+gameObject);
         eventTrigger.OnPointerClick(new PointerEventData(eventSystem));
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         eventTrigger = this.GetComponent<EventTrigger>();
         spriteBounds = this.GetComponent<SpriteRenderer>().bounds;
@@ -51,12 +52,11 @@ public class ClickCatcher : MonoBehaviour
 #endif
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (platform == PLATFORM.STANDALONE)
         {
-            //Get click
+            //Get click mouse button up
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -69,8 +69,8 @@ public class ClickCatcher : MonoBehaviour
         }
         else
         {
-            //Get touch
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            //Get touch Stationary to prevent wrong actions
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Stationary)
             {
                 Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
                 clickPoint.z = spriteBounds.center.z;

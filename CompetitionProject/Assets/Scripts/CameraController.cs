@@ -11,9 +11,30 @@ public class CameraController : MonoBehaviour
     }
     private PLATFORM platform = PLATFORM.PHONE;
 
+    //Camera state
+    enum STATE
+    {
+        SLIDE = 0,
+        TOUCH = 1,
+        MOVE = 2,
+        ZOOM = 3,
+        MOVE_ZOOM = 4,
+        IDLE = 5
+    }
+    private STATE camState = STATE.IDLE;
+
     private bool mousePressing = false;
     //Camera move speed
     private float speed;
+    private float zoomSpeed = 0f;
+    private float zoomScale_normal = 5f;
+    private float zoomScale_to;
+    private Vector3 moveSpeed;
+    private Vector3 lastPosition;
+    private Vector3 targetPosition;
+
+    public float zoomTime = 20f;
+    public float zoomScale = 2f;
 
     //Load options or reload on resume
     public void loadCamSettings()
@@ -33,12 +54,19 @@ public class CameraController : MonoBehaviour
 
     public void cameraOut()
     {
-        Camera.main.orthographicSize = 5;
+        targetPosition = lastPosition;
+        zoomScale_to = zoomScale_normal;
+        camState = STATE.MOVE_ZOOM;
+        mousePressing = false;
     }
 
     public void cameraIn(GameObject target)
     {
-        Camera.main.orthographicSize = 2;
+        lastPosition = Camera.main.gameObject.transform.position;
+        targetPosition = target.gameObject.transform.position;
+        zoomScale_to = zoomScale;
+        camState = STATE.MOVE_ZOOM;
+        mousePressing = false;
     }
 
     // Start is called before the first frame update
@@ -72,19 +100,48 @@ public class CameraController : MonoBehaviour
     //Using FixedUpdate to make sure the game will stop when timescale = 0
     private void FixedUpdate()
     {
-
-
-        //Choose capable moving method
-        if (platform == PLATFORM.STANDALONE)
+        //Camera idle
+        if (camState == STATE.IDLE)
         {
-            //For Windows, Linux, OSX
-            cameraTranlate_STANDALONE();
+            //Choose capable moving method
+            if (platform == PLATFORM.STANDALONE)
+            {
+                //For Windows, Linux, OSX
+                cameraTranlate_STANDALONE();
+            }
+            else
+            {
+                //Temporarily for Android and iOS
+                cameraTranlate_PHONE();
+            }
         }
-        else
+        //Camera move and zoom
+        else if (camState == STATE.MOVE_ZOOM)
         {
-            //Temporarily for Android and iOS
-            cameraTranlate_PHONE();
+            Camera.main.orthographicSize = Mathf.SmoothDamp(
+                Camera.main.orthographicSize, zoomScale_to, ref zoomSpeed, zoomTime * Time.deltaTime);
+            Camera.main.transform.position = Vector3.SmoothDamp(
+                Camera.main.transform.position,
+                new Vector3(targetPosition.x, targetPosition.y, Camera.main.transform.position.z),
+                ref moveSpeed, zoomTime * Time.deltaTime);
+            if (Mathf.Abs(Camera.main.orthographicSize - zoomScale_to) <= zoomScale_to * 0.01f)
+            {
+                Debug.Log("Got place!");
+                Camera.main.orthographicSize = zoomScale_to;
+                Camera.main.transform.position =
+                new Vector3(targetPosition.x, targetPosition.y, Camera.main.transform.position.z);
+                camState = STATE.IDLE;
+                mousePressing = false;
+            }
         }
+
+        //Camera slide
+
+        //Camera zoom
+
+        //Camera move
+
+        //Camera touch
     }
 
     //Camera moving method for Windows, Linux, OSX
