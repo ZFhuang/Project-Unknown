@@ -27,6 +27,8 @@ public class Options : MonoBehaviour
     //Save settings
     public void saveOptions()
     {
+        PlayerPrefs.SetFloat("mainVolume", mainVolume);
+        PlayerPrefs.SetFloat("speed", speed);
         Debug.Log("Save options!");
         PlayerPrefs.Save();
     }
@@ -37,14 +39,14 @@ public class Options : MonoBehaviour
         //check if mainVolume existed and load
         if (!PlayerPrefs.HasKey("mainVolume"))
         {
-            Debug.Log("init mainVolume!");
             PlayerPrefs.SetFloat("mainVolume", -20f);
             mainVolume = -20f;
+            Debug.Log(this.gameObject + " init mainVolume: " + mainVolume);
         }
         else if (PlayerPrefs.HasKey("mainVolume"))
         {
-            Debug.Log("load mainVolume!");
             mainVolume = PlayerPrefs.GetFloat("mainVolume");
+            Debug.Log(this.gameObject + " load mainVolume: " + mainVolume);
         }
         mainAudioMixer.SetFloat("MainMusicVolume", mainVolume);
         //set volume slider
@@ -53,14 +55,14 @@ public class Options : MonoBehaviour
         //check if speed existed and load
         if (!PlayerPrefs.HasKey("speed"))
         {
-            Debug.Log("init speed!");
             PlayerPrefs.SetFloat("speed", 0.5f);
             speed = 0.5f;
+            Debug.Log(this.gameObject + " init speed: " + speed);
         }
         else if (PlayerPrefs.HasKey("speed"))
         {
-            Debug.Log("load speed!");
             speed = PlayerPrefs.GetFloat("speed");
+            Debug.Log(this.gameObject + " load speed: " + speed);
         }
         //set speed slider
         speedSlider.GetComponent<Slider>().value = speed * 100;
@@ -86,14 +88,12 @@ public class Options : MonoBehaviour
         //the real min volume and max volume from -40db to 10db
         mainVolume = input * 0.5f - 40;
         mainAudioMixer.SetFloat("MainMusicVolume", mainVolume);
-        PlayerPrefs.SetFloat("mainVolume", mainVolume);
 
         //Mute the sound
         if (input == 0)
         {
             mainVolume = -80;
             mainAudioMixer.SetFloat("MainMusicVolume", mainVolume);
-            PlayerPrefs.SetFloat("mainVolume", mainVolume);
         }
     }
 
@@ -101,6 +101,5 @@ public class Options : MonoBehaviour
     {
         //Change the move speed
         speed = input / 100;
-        PlayerPrefs.SetFloat("speed", speed);
     }
 }
