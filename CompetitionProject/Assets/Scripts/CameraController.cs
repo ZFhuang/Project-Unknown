@@ -173,7 +173,6 @@ public class CameraController : MonoBehaviour
 
             if (Mathf.Abs(mCam.orthographicSize - zoomScale_to) <= zoomScale_to * 0.001f)
             {
-                Debug.Log("Got place!");
                 mCam.orthographicSize = zoomScale_to;
                 cameraPositionTrans(targetPosition.x, targetPosition.y);
                 //When complete zooming, we should refresh the zone to adapt the new bound
