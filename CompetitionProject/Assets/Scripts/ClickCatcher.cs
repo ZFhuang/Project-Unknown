@@ -39,7 +39,6 @@ public class ClickCatcher : MonoBehaviour
 
 #if UNITY_ANDROID
         platform = PLATFORM.PHONE;
-        Debug.Log("UNITY_ANDROID.PHONE");
 #endif
 
 #if UNITY_IPHONE
@@ -49,7 +48,6 @@ public class ClickCatcher : MonoBehaviour
 
 #if UNITY_EDITOR
         platform = PLATFORM.STANDALONE;
-        Debug.Log("UNITY_EDITOR.STANDALONE");
 #endif
     }
 

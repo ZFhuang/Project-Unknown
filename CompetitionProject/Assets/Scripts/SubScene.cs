@@ -63,7 +63,8 @@ public class SubScene : MonoBehaviour
                 Color(subForeground.color.r, subForeground.color.g, subForeground.color.b,
                 Mathf.SmoothDamp(subForeground.color.a, newAlpha_fore, 
                 ref alphaSpeed, alphaTime * Time.deltaTime));
-            if (Mathf.Abs(subBackground.color.a - newAlpha_back) <= newAlpha_back * 0.01f)
+
+            if (Mathf.Abs(subBackground.color.a - newAlpha_back) <= newAlpha_back * 0.001f)
             {
                 subForeground.color = new
                 Color(subBackground.color.r, subBackground.color.g, subBackground.color.b, newAlpha_back);

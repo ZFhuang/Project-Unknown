@@ -26,12 +26,21 @@ public class CameraController : MonoBehaviour
     private bool mousePressing = false;
     //Camera move speed
     private float speed;
+    private Camera mCam;
     private float zoomSpeed = 0f;
     private float zoomScale_old = 5f;
     private float zoomScale_to;
     private Vector3 moveSpeed;
     private Vector3 lastPosition;
+    private SpriteRenderer lastBounder;
     private Vector3 targetPosition;
+    //Camera deadzone settings
+    private float minHor;
+    private float maxHor;
+    private float minVer;
+    private float maxVer;
+    [SerializeField]
+    private SpriteRenderer backgoundBounder;
 
     public float zoomTime = 20f;
     public float zoomScale = 2f;
@@ -52,6 +61,30 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    //Refresh camera deadzone to ensure player control the camera rightly
+    public void refreshDeadzone(SpriteRenderer input, float camSize)
+    {
+        //Using aspectRation to caculate the horizon width
+        float aspectRatio = Screen.width * 1.0f / Screen.height;
+
+        minHor = input.transform.position.x - input.bounds.size.x / 2 + camSize * aspectRatio;
+        maxHor = input.transform.position.x + input.bounds.size.x / 2 - camSize * aspectRatio;
+        minVer = input.transform.position.y - input.bounds.size.y / 2 + camSize;
+        maxVer = input.transform.position.y + input.bounds.size.y / 2 - camSize;
+
+        //Restrict the bounds
+        if (minHor > maxHor)
+        {
+            minHor = input.transform.position.x;
+            maxHor = input.transform.position.x;
+        }
+        if (minVer > maxVer)
+        {
+            minVer = input.transform.position.y;
+            maxVer = input.transform.position.y;
+        }
+    }
+
     //Transwrite of cameraIn
     public void cameraOut()
     {
@@ -59,12 +92,17 @@ public class CameraController : MonoBehaviour
         zoomScale_to = zoomScale_old;
         camState = STATE.MOVE_ZOOM;
         mousePressing = false;
+        backgoundBounder = lastBounder;
+        //When zooming out, camSize should bet set at first ensuring not leading a flash change
+        refreshDeadzone(backgoundBounder, zoomScale_to);
     }
 
     //Change the state to zoom in FixedUpdate
     public void cameraIn(GameObject target)
     {
-        lastPosition = Camera.main.gameObject.transform.position;
+        lastPosition = mCam.gameObject.transform.position;
+        lastBounder = backgoundBounder;
+        backgoundBounder = target.GetComponent<SpriteRenderer>();
         targetPosition = target.gameObject.transform.position;
         zoomScale_to = zoomScale;
         camState = STATE.MOVE_ZOOM;
@@ -74,8 +112,11 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        //init
+        mCam = Camera.main;
+        //Init options
         loadCamSettings();
+        //Init deadzone
+        refreshDeadzone(backgoundBounder, mCam.orthographicSize);
 
         //Use preprocessor to get using platform
 #if UNITY_STANDALONE
@@ -103,7 +144,7 @@ public class CameraController : MonoBehaviour
     private void FixedUpdate()
     {
         //Camera idle
-        if (camState == STATE.IDLE)
+        if (camState == STATE.IDLE || camState == STATE.SLIDE)
         {
             //Choose capable moving method
             if (platform == PLATFORM.STANDALONE)
@@ -118,20 +159,25 @@ public class CameraController : MonoBehaviour
             }
         }
         //Camera move and zoom
+        //Using SmoothDamp to smoothly changing the values
         else if (camState == STATE.MOVE_ZOOM)
         {
-            Camera.main.orthographicSize = Mathf.SmoothDamp(
-                Camera.main.orthographicSize, zoomScale_to, ref zoomSpeed, zoomTime * Time.deltaTime);
-            Camera.main.transform.position = Vector3.SmoothDamp(
-                Camera.main.transform.position,
-                new Vector3(targetPosition.x, targetPosition.y, Camera.main.transform.position.z),
+            mCam.orthographicSize = Mathf.SmoothDamp(
+                mCam.orthographicSize, zoomScale_to, ref zoomSpeed, zoomTime * Time.deltaTime);
+            Vector3 pos = Vector3.SmoothDamp(
+                mCam.transform.position,
+                new Vector3(targetPosition.x, targetPosition.y, mCam.transform.position.z),
                 ref moveSpeed, zoomTime * Time.deltaTime);
-            if (Mathf.Abs(Camera.main.orthographicSize - zoomScale_to) <= zoomScale_to * 0.01f)
+
+            cameraPositionTrans(pos.x, pos.y);
+
+            if (Mathf.Abs(mCam.orthographicSize - zoomScale_to) <= zoomScale_to * 0.001f)
             {
                 Debug.Log("Got place!");
-                Camera.main.orthographicSize = zoomScale_to;
-                Camera.main.transform.position =
-                new Vector3(targetPosition.x, targetPosition.y, Camera.main.transform.position.z);
+                mCam.orthographicSize = zoomScale_to;
+                cameraPositionTrans(targetPosition.x, targetPosition.y);
+                //When complete zooming, we should refresh the zone to adapt the new bound
+                refreshDeadzone(backgoundBounder, zoomScale_to);
                 camState = STATE.IDLE;
                 mousePressing = false;
             }
@@ -142,8 +188,6 @@ public class CameraController : MonoBehaviour
         //Camera zoom
 
         //Camera move
-
-        //Camera touch
     }
 
     //Camera moving method for Windows, Linux, OSX
@@ -164,15 +208,17 @@ public class CameraController : MonoBehaviour
         //On mouse pressing
         if (mousePressing)
         {
-            Vector3 p = Camera.main.transform.position;
+            Vector3 p = mCam.transform.position;
             //Move X
-            Vector3 p1 = p - Camera.main.transform.right *
-                Input.GetAxis("Mouse X") * speed * Time.timeScale * 0.5f;
+            Vector3 p1 = p - mCam.transform.right *
+                Input.GetAxis("Mouse X") * speed * Time.timeScale * 0.5f *
+                (mCam.orthographicSize / 5f);
             //Move Y
-            Vector3 p2 = p1 - Camera.main.transform.up *
-                Input.GetAxis("Mouse Y") * speed * Time.timeScale * 0.5f;
+            Vector3 p2 = p1 - mCam.transform.up *
+                Input.GetAxis("Mouse Y") * speed * Time.timeScale * 0.5f *
+                (mCam.orthographicSize / 5f);
             //Set transform
-            Camera.main.transform.position = p2;
+            cameraPositionTrans(p2.x, p2.y);
         }
     }
 
@@ -184,7 +230,29 @@ public class CameraController : MonoBehaviour
         {
             Vector2 delta = Input.GetTouch(0).deltaPosition;
             //Set transform
-            Camera.main.transform.Translate(-delta.x * speed / 50f, -delta.y * speed / 50f, 0);
+            //Devide by (mCam.orthographicSize / 5f) to make sure the speed are same
+            //when changing the camera size
+            cameraPositionTrans(
+                mCam.transform.position.x
+                - delta.x * speed / 50f * (mCam.orthographicSize / 5f),
+                mCam.transform.position.x
+                - delta.x * speed / 50f * (mCam.orthographicSize / 5f));
         }
+    }
+
+    //Pack the camera position translate function to restrict the position
+    private void cameraPositionTrans(float x, float y)
+    {
+        if (x < minHor)
+            x = minHor;
+        if (x > maxHor)
+            x = maxHor;
+        if (y < minVer)
+            y = minVer;
+        if (y > maxVer)
+            y = maxVer;
+
+        //Position change here
+        mCam.transform.position = new Vector3(x, y, mCam.transform.position.z);
     }
 }
