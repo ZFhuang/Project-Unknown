@@ -55,7 +55,7 @@ public class ClickCatcher : MonoBehaviour
     {
         if (platform == PLATFORM.STANDALONE)
         {
-            //Get click mouse button up
+            //Get click mouse button down
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static bool canTrans = true;
+
     enum PLATFORM
     {
         STANDALONE = 0,
@@ -242,16 +244,20 @@ public class CameraController : MonoBehaviour
     //Pack the camera position translate function to restrict the position
     private void cameraPositionTrans(float x, float y)
     {
-        if (x < minHor)
-            x = minHor;
-        if (x > maxHor)
-            x = maxHor;
-        if (y < minVer)
-            y = minVer;
-        if (y > maxVer)
-            y = maxVer;
+        if (canTrans)
+        {
 
-        //Position change here
-        mCam.transform.position = new Vector3(x, y, mCam.transform.position.z);
+            if (x < minHor)
+                x = minHor;
+            if (x > maxHor)
+                x = maxHor;
+            if (y < minVer)
+                y = minVer;
+            if (y > maxVer)
+                y = maxVer;
+
+            //Position change here
+            mCam.transform.position = new Vector3(x, y, mCam.transform.position.z);
+        }
     }
 }
