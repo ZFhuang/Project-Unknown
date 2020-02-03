@@ -14,6 +14,8 @@ public class DragCatcher : MonoBehaviour
     private PLATFORM platform = PLATFORM.PHONE;
 
     public float moveTime = 8f;
+    public bool isDraging;
+    public bool isBacking;
 
     [SerializeField]
     private int localOrder;
@@ -22,8 +24,6 @@ public class DragCatcher : MonoBehaviour
     private Vector3 backPos;
     private Vector3 moveSpeed;
     private float moveLen;
-    private bool isDraging;
-    private bool isBacking;
 
     public void beginDragEvent()
     {
@@ -96,8 +96,6 @@ public class DragCatcher : MonoBehaviour
                 {
                     Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     mousePoint.z = sprite.bounds.center.z;
-                    Debug.Log(mousePoint);
-                    Debug.Log(sprite.bounds);
                     if (sprite.bounds.Contains(mousePoint))
                     {
                         beginDragEvent();
@@ -106,7 +104,7 @@ public class DragCatcher : MonoBehaviour
                     }
                 }
                 //Get click mouse button up
-                if (Input.GetMouseButtonUp(0))
+                if (isDraging == true && Input.GetMouseButtonUp(0))
                 {
                     Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     mousePoint.z = sprite.bounds.center.z;
@@ -115,16 +113,13 @@ public class DragCatcher : MonoBehaviour
                     isDraging = false;
                 }
                 //On draging
-                if (isDraging == true)
+                if (isDraging == true & Input.GetMouseButton(0))
                 {
-                    if (Input.GetMouseButton(0))
-                    {
-                        Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                        mousePoint.z = sprite.bounds.center.z;
-                        onDragEvent();
-                        CameraController.CANTRANS = false;
-                        this.transform.position = mousePoint;
-                    }
+                    Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    mousePoint.z = sprite.bounds.center.z;
+                    onDragEvent();
+                    CameraController.CANTRANS = false;
+                    this.transform.position = mousePoint;
                 }
             }
             else
@@ -142,7 +137,7 @@ public class DragCatcher : MonoBehaviour
                     }
                 }
                 //Get touch ended
-                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+                if (isDraging = false && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
                     Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
                     clickPoint.z = sprite.bounds.center.z;
@@ -151,16 +146,13 @@ public class DragCatcher : MonoBehaviour
                     isDraging = false;
                 }
                 //On draging
-                if (isDraging == true)
+                if (isDraging == true && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
                 {
-                    if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
-                    {
-                        Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-                        clickPoint.z = sprite.bounds.center.z;
-                        onDragEvent();
-                        CameraController.CANTRANS = false;
-                        this.transform.position = clickPoint;
-                    }
+                    Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
+                    clickPoint.z = sprite.bounds.center.z;
+                    onDragEvent();
+                    CameraController.CANTRANS = false;
+                    this.transform.position = clickPoint;
                 }
             }
 

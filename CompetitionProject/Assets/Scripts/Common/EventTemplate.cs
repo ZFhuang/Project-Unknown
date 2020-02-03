@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Playables;
 
-public class Event2 : MonoBehaviour
+public class Event : MonoBehaviour
 {
     [SerializeField]
     private GameObject dragObject1;
@@ -12,11 +11,8 @@ public class Event2 : MonoBehaviour
     private GameObject dragTarget1;
     private Bounds bound_dragTarget1;
 
-    [SerializeField]
-    private PlayableDirector EventDirector;
-
-    private int phase = 1;
-    private int sumPhase = 1;
+    private int phase=0;
+    private int sumPhase=3;
 
     public void nextPhase()
     {
@@ -24,8 +20,6 @@ public class Event2 : MonoBehaviour
         {
             endEvent();
         }
-        phase++;
-        Debug.Log(gameObject + "Phase: " + phase);
     }
 
     public void endEvent()
@@ -35,26 +29,12 @@ public class Event2 : MonoBehaviour
 
     private void phase1()
     {
-        if (dragObject1.GetComponent<DragCatcher>().isDraging)
-        {
-            //dragTarget1 do something here
-        }
-        if ((!dragObject1.GetComponent<DragCatcher>().isDraging)&&
-            (!dragObject1.GetComponent<DragCatcher>().isBacking))
-        {
-            if (isIntersect(dragObject1.GetComponent<SpriteRenderer>().bounds, bound_dragTarget1))
-            {
-                Debug.Log(dragObject1 + "Got Place: " + phase);
-                dragObject1.GetComponent<DragCatcher>().truePlace(bound_dragTarget1.center);
-                dragTarget1.SetActive(false);
-                nextPhase();
-            }
-        }
+        
     }
 
     private void phase2()
     {
-        ;
+
     }
 
     private void phase3()
@@ -66,7 +46,6 @@ public class Event2 : MonoBehaviour
     void Start()
     {
         bound_dragTarget1 = dragTarget1.GetComponent<SpriteRenderer>().bounds;
-        Debug.Log(gameObject + "Phase: " + phase);
     }
 
     void FixedUpdate()
