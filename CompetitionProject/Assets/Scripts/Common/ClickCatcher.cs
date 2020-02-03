@@ -13,16 +13,16 @@ public class ClickCatcher : MonoBehaviour
     }
     private PLATFORM platform = PLATFORM.PHONE;
 
-    private EventTrigger eventTrigger;
     [SerializeField]
-    private EventSystem eventSystem;
+    private int localOrder;
     private Bounds spriteBounds;
+    private EventTrigger eventTrigger;
 
     public void clickEvent()
     {
         //Call the eventTrigger attached
         Debug.Log("Click: "+gameObject);
-        eventTrigger.OnPointerClick(new PointerEventData(eventSystem));
+        eventTrigger.OnPointerClick(new PointerEventData(EventSystem.current));
     }
 
     // Start is called before the first frame update
@@ -53,29 +53,32 @@ public class ClickCatcher : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (platform == PLATFORM.STANDALONE)
+        if (localOrder == CameraController.ORDER)
         {
-            //Get click mouse button down
-            if (Input.GetMouseButtonDown(0))
+            if (platform == PLATFORM.STANDALONE)
             {
-                Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                mousePoint.z = spriteBounds.center.z;
-                if (spriteBounds.Contains(mousePoint))
+                //Get click mouse button down
+                if (Input.GetMouseButtonDown(0))
                 {
-                    clickEvent();
+                    Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    mousePoint.z = spriteBounds.center.z;
+                    if (spriteBounds.Contains(mousePoint))
+                    {
+                        clickEvent();
+                    }
                 }
             }
-        }
-        else
-        {
-            //Get touch Stationary to prevent wrong actions
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Stationary)
+            else
             {
-                Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-                clickPoint.z = spriteBounds.center.z;
-                if (spriteBounds.Contains(clickPoint))
+                //Get touch Stationary to prevent wrong actions
+                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Stationary)
                 {
-                    clickEvent();
+                    Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
+                    clickPoint.z = spriteBounds.center.z;
+                    if (spriteBounds.Contains(clickPoint))
+                    {
+                        clickEvent();
+                    }
                 }
             }
         }

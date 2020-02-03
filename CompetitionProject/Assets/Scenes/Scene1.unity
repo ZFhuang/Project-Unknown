@@ -349,7 +349,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &124346359
 GameObject:
@@ -383,6 +383,7 @@ Transform:
   - {fileID: 1788623882}
   - {fileID: 1763589243}
   - {fileID: 554893037}
+  - {fileID: 919699674}
   m_Father: {fileID: 1786803191}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -411,7 +412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224177943}
   m_Layer: 0
-  m_Name: Actions
+  m_Name: Actors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -695,7 +696,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477962647}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.4, y: -9.34, z: -286.35156}
+  m_LocalPosition: {x: -5.5, y: -9.3, z: -286.35156}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224177943}
@@ -781,7 +782,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 719212799603ec2469d37420b84a70e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSystem: {fileID: 1340990450}
+  moveTime: 2
+  localOrder: 1
 --- !u!114 &477962652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1548,7 +1550,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &810719318
 MonoBehaviour:
@@ -1562,9 +1564,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0b625fda4db6f469e285433551534c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgoundBounder: {fileID: 123203800}
   zoomTime: 20
   zoomScale: 2
+  backgoundBounder: {fileID: 123203800}
 --- !u!1 &889881518
 GameObject:
   m_ObjectHideFlags: 0
@@ -1705,6 +1707,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889881518}
   m_CullTransparentMesh: 0
+--- !u!1 &919699673
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 919699674}
+  m_Layer: 0
+  m_Name: Script_Event2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &919699674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919699673}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 124346360}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &981546044
 GameObject:
   m_ObjectHideFlags: 0
@@ -2139,7 +2171,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1340990449
 MonoBehaviour:
@@ -2554,7 +2586,7 @@ RectTransform:
   - {fileID: 702845482}
   - {fileID: 529099673}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2653,7 +2685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacb1b0c8895843408d2a1dd7ae5ebec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSystem: {fileID: 1340990450}
+  localOrder: 0
 --- !u!212 &1566428753
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3194,7 +3226,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2007045879
 GameObject:
@@ -3632,7 +3664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacb1b0c8895843408d2a1dd7ae5ebec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSystem: {fileID: 1340990450}
+  localOrder: 0
 --- !u!4 &4270761717338680255
 Transform:
   m_ObjectHideFlags: 0

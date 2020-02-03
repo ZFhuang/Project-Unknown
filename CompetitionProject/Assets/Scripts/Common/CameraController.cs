@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public static bool canTrans = true;
+    public static bool CANTRANS = true;
+    public static int ORDER=0;
 
     enum PLATFORM
     {
@@ -25,6 +26,11 @@ public class CameraController : MonoBehaviour
     }
     private STATE camState = STATE.IDLE;
 
+    public float zoomTime = 20f;
+    public float zoomScale = 2f;
+
+    [SerializeField]
+    private SpriteRenderer backgoundBounder;
     private bool mousePressing = false;
     //Camera move speed
     private float speed;
@@ -41,11 +47,6 @@ public class CameraController : MonoBehaviour
     private float maxHor;
     private float minVer;
     private float maxVer;
-    [SerializeField]
-    private SpriteRenderer backgoundBounder;
-
-    public float zoomTime = 20f;
-    public float zoomScale = 2f;
 
     //Load options or reload on resume
     public void loadCamSettings()
@@ -97,6 +98,7 @@ public class CameraController : MonoBehaviour
         backgoundBounder = lastBounder;
         //When zooming out, camSize should bet set at first ensuring not leading a flash change
         refreshDeadzone(backgoundBounder, zoomScale_to);
+        ORDER--;
     }
 
     //Change the state to zoom in FixedUpdate
@@ -109,12 +111,14 @@ public class CameraController : MonoBehaviour
         zoomScale_to = zoomScale;
         camState = STATE.MOVE_ZOOM;
         mousePressing = false;
+        ORDER++;
     }
 
     // Start is called before the first frame update
     private void Start()
     {
         mCam = Camera.main;
+        
         //Init options
         loadCamSettings();
         //Init deadzone
@@ -244,7 +248,7 @@ public class CameraController : MonoBehaviour
     //Pack the camera position translate function to restrict the position
     private void cameraPositionTrans(float x, float y)
     {
-        if (canTrans)
+        if (CANTRANS)
         {
 
             if (x < minHor)
