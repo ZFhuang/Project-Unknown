@@ -15,14 +15,19 @@ public class ClickCatcher : MonoBehaviour
 
     [SerializeField]
     private int localOrder;
+    [SerializeField]
+    private EventTemplate EventController;
+
     private Bounds spriteBounds;
     private EventTrigger eventTrigger;
 
     public void clickEvent()
     {
         //Call the eventTrigger attached
-        Debug.Log("Click: "+gameObject);
-        eventTrigger.OnPointerClick(new PointerEventData(EventSystem.current));
+        if (eventTrigger != null)
+            eventTrigger.OnPointerClick(new PointerEventData(EventSystem.current));
+        if (EventController != null)
+            EventController.reactClick();
     }
 
     // Start is called before the first frame update
