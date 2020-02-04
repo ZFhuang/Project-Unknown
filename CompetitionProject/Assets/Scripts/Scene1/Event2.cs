@@ -15,9 +15,6 @@ public class Event2 : EventTemplate
     [SerializeField]
     private GameObject clickTarget2;
 
-    [SerializeField]
-    private PlayableDirector EventDirector;
-
     public override bool reactBeginDrag()
     {
         switch (phase)
@@ -42,6 +39,7 @@ public class Event2 : EventTemplate
                 if (isIntersect(dragObject1.GetComponent<SpriteRenderer>().bounds, bound_dragTarget1))
                 {
                     Debug.Log(dragObject1 + "Got Place: " + bound_dragTarget1 + phase);
+                    dragObject1.transform.position = bound_dragTarget1.center;
                     dragObject1.GetComponent<DragCatcher>().truePlace(bound_dragTarget1.center);
                     nextPhase();
                     return true;
@@ -57,8 +55,12 @@ public class Event2 : EventTemplate
         switch (phase)
         {
             case 2:
-                EventDirector.Play();
+                dragObject1.GetComponent<Animator>().applyRootMotion = true;
+
+
                 clickTarget2.SetActive(false);
+                Debug.Log(dragObject1 + ": " + dragObject1.transform.position);
+                Debug.Log(clickTarget2 + ": " + clickTarget2.GetComponent<SpriteRenderer>().bounds.center);
                 break;
         }
 
@@ -73,7 +75,11 @@ public class Event2 : EventTemplate
                 dragTarget1.SetActive(false);
                 break;
             case 2:
-                clickTarget2.SetActive(false);
+                Debug.Log(dragObject1 + ": " + dragObject1.transform.localPosition);
+                Debug.Log(clickTarget2 + ": " + clickTarget2.transform.localPosition);
+                dragObject1.GetComponent<Animator>().applyRootMotion = false;
+                dragObject1.transform.position = clickTarget2.transform.position;
+                dragObject1.GetComponent<DragCatcher>().truePlace(clickTarget2.GetComponent<SpriteRenderer>().bounds.center);
                 break;
         }
         base.onPhaseEnd();
@@ -97,7 +103,7 @@ public class Event2 : EventTemplate
     // Start is called before the first frame update
     private void Start()
     {
-        
+
         phase = 0;
         sumPhase = 3;
         bound_dragTarget1 = dragTarget1.GetComponent<SpriteRenderer>().bounds;
@@ -114,13 +120,6 @@ public class Event2 : EventTemplate
         switch (phase)
         {
             case 2:
-                //When animate's playing is completed
-                if (EventDirector.time == EventDirector.duration)
-                {
-                    dragObject1.GetComponent<DragCatcher>().truePlace(dragObject1.transform.position);
-                    EventDirector.Stop();
-                    nextPhase();
-                }
                 break;
         }
     }
