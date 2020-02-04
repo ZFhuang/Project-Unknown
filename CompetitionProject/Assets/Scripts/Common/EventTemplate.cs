@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Event : MonoBehaviour
+public class EventTemplate : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject dragObject1;
-
-    [SerializeField]
-    private GameObject dragTarget1;
-    private Bounds bound_dragTarget1;
-
-    private int phase=0;
-    private int sumPhase=3;
+    protected int phase;
+    protected int sumPhase;
 
     public void nextPhase()
     {
@@ -27,48 +20,18 @@ public class Event : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    private void phase1()
+    public virtual bool reactBeginDrag()
     {
-        
+        return false;
     }
 
-    private void phase2()
+    public virtual bool reactEndDrag()
     {
-
-    }
-
-    private void phase3()
-    {
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        bound_dragTarget1 = dragTarget1.GetComponent<SpriteRenderer>().bounds;
-    }
-
-    void FixedUpdate()
-    {
-        switch (phase)
-        {
-            case 1:
-                phase1();
-                break;
-            case 2:
-                phase2();
-                break;
-            case 3:
-                phase3();
-                break;
-            default:
-                endEvent();
-                break;
-        }
+        return false;
     }
 
     //Return if two bounds are intersected
-    private bool isIntersect(Bounds A, Bounds B)
+    protected bool isIntersect(Bounds A, Bounds B)
     {
         Vector3 APos = A.center;
         Vector3 ASize = A.extents;

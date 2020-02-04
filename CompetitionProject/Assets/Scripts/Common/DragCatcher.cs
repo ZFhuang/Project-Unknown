@@ -19,6 +19,8 @@ public class DragCatcher : MonoBehaviour
 
     [SerializeField]
     private int localOrder;
+    [SerializeField]
+    private EventTemplate EventController;
     private EventTrigger eventTrigger;
     private SpriteRenderer sprite;
     private Vector3 backPos;
@@ -37,7 +39,8 @@ public class DragCatcher : MonoBehaviour
         //Call the eventTrigger attached
         if (eventTrigger != null)
             eventTrigger.OnEndDrag(new PointerEventData(EventSystem.current));
-        falsePlace();
+        if(EventController!=null&& !EventController.reactEndDrag())
+            falsePlace();
     }
 
     public void onDragEvent()

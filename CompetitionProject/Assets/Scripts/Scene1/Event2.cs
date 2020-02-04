@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class Event2 : MonoBehaviour
+public class Event2 : EventTemplate
 {
     [SerializeField]
     private GameObject dragObject1;
@@ -15,32 +15,12 @@ public class Event2 : MonoBehaviour
     [SerializeField]
     private PlayableDirector EventDirector;
 
-    private int phase = 1;
-    private int sumPhase = 1;
+    private new int phase = 1;
+    private new int sumPhase = 1;
 
-    public void nextPhase()
+    public override bool reactEndDrag()
     {
-        if (phase >= sumPhase)
-        {
-            endEvent();
-        }
-        phase++;
-        Debug.Log(gameObject + "Phase: " + phase);
-    }
-
-    public void endEvent()
-    {
-        this.gameObject.SetActive(false);
-    }
-
-    private void phase1()
-    {
-        if (dragObject1.GetComponent<DragCatcher>().isDraging)
-        {
-            //dragTarget1 do something here
-        }
-        if ((!dragObject1.GetComponent<DragCatcher>().isDraging)&&
-            (!dragObject1.GetComponent<DragCatcher>().isBacking))
+        if (phase == 1)
         {
             if (isIntersect(dragObject1.GetComponent<SpriteRenderer>().bounds, bound_dragTarget1))
             {
@@ -48,7 +28,18 @@ public class Event2 : MonoBehaviour
                 dragObject1.GetComponent<DragCatcher>().truePlace(bound_dragTarget1.center);
                 dragTarget1.SetActive(false);
                 nextPhase();
+                return true;
             }
+        }
+
+        return base.reactEndDrag();
+    }
+
+    private void phase1()
+    {
+        if (dragObject1.GetComponent<DragCatcher>().isDraging)
+        {
+            //dragTarget1 do something here
         }
     }
 
@@ -86,25 +77,5 @@ public class Event2 : MonoBehaviour
                 endEvent();
                 break;
         }
-    }
-
-    //Return if two bounds are intersected
-    private bool isIntersect(Bounds A, Bounds B)
-    {
-        Vector3 APos = A.center;
-        Vector3 ASize = A.extents;
-        Vector3 BPos = B.center;
-        Vector3 BSize = B.extents;
-        //Two bounder's max distance
-        float halfSum_X = ASize.x + BSize.x;
-        float halfSum_Y = ASize.y + BSize.y;
-        //Their real distance
-        float distance_X = Mathf.Abs(APos.x - BPos.x);
-        float distance_Y = Mathf.Abs(APos.y - BPos.y);
-        //If all small than max value, it means they are intersected
-        if (distance_X <= halfSum_X && distance_Y <= halfSum_Y)
-            return true;
-        else
-            return false;
     }
 }
