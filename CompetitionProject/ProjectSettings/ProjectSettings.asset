@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: '#UNDEFINE'
   productName: ProjectUnknown
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -120,7 +120,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1
+  bundleVersion: 0.2
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -279,7 +279,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 16c1640bf7925604ebf429c038198196, type: 3}
+      m_Icon: {fileID: 2800000, guid: 127b740034c7f9341ac56efb1e20d704, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

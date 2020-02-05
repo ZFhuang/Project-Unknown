@@ -240,8 +240,8 @@ public class CameraController : MonoBehaviour
             cameraPositionTrans(
                 mCam.transform.position.x
                 - delta.x * speed / 50f * (mCam.orthographicSize / 5f),
-                mCam.transform.position.x
-                - delta.x * speed / 50f * (mCam.orthographicSize / 5f));
+                mCam.transform.position.y
+                - delta.y * speed / 50f * (mCam.orthographicSize / 5f));
         }
     }
 

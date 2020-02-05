@@ -45,7 +45,7 @@ public class EventTemplate : MonoBehaviour
     /// </summary>
 
     //Call it when a phase ending sign is appear
-    protected void nextPhase()
+    public void nextPhase()
     {
         onPhaseEnd();
         phase++;
@@ -68,7 +68,7 @@ public class EventTemplate : MonoBehaviour
     }
 
     //It will be called at the end of the event, that is to say when "phase > sumPhase"
-    protected void endEvent()
+    protected virtual void endEvent()
     {
         this.gameObject.SetActive(false);
     }

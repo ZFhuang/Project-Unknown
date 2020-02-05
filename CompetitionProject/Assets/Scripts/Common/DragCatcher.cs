@@ -14,8 +14,8 @@ public class DragCatcher : MonoBehaviour
     private PLATFORM platform = PLATFORM.PHONE;
 
     public float moveTime = 8f;
-    public bool isDraging;
-    public bool isBacking;
+
+    public bool canDrag = true;
 
     [SerializeField]
     private int localOrder;
@@ -27,6 +27,8 @@ public class DragCatcher : MonoBehaviour
     private Vector3 backPos;
     private Vector3 moveSpeed;
     private float moveLen;
+    private bool isDraging=false;
+    private bool isBacking=false;
 
     public void beginDragEvent()
     {
@@ -94,7 +96,7 @@ public class DragCatcher : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (localOrder == CameraController.ORDER)
+        if (localOrder == CameraController.ORDER&& canDrag)
         {
             if (platform == PLATFORM.STANDALONE)
             {
@@ -113,14 +115,12 @@ public class DragCatcher : MonoBehaviour
                 //Get click mouse button up
                 if (isDraging == true && Input.GetMouseButtonUp(0))
                 {
-                    Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    mousePoint.z = sprite.bounds.center.z;
                     endDragEvent();
                     CameraController.CANTRANS = true;
                     isDraging = false;
                 }
                 //On draging
-                if (isDraging == true & Input.GetMouseButton(0))
+                if (isDraging == true && Input.GetMouseButton(0))
                 {
                     Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     mousePoint.z = sprite.bounds.center.z;
@@ -132,7 +132,7 @@ public class DragCatcher : MonoBehaviour
             else
             {
                 //Get touch began
-                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+                if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
                 {
                     Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
                     clickPoint.z = sprite.bounds.center.z;
@@ -144,25 +144,24 @@ public class DragCatcher : MonoBehaviour
                     }
                 }
                 //Get touch ended
-                if (isDraging = false && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+                if (isDraging == true && Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
-                    Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-                    clickPoint.z = sprite.bounds.center.z;
                     endDragEvent();
                     CameraController.CANTRANS = true;
                     isDraging = false;
                 }
-                //On draging
+                //On draging, perform badly, should find some way to get the real touch position in WorldPoint
                 if (isDraging == true && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
                 {
-                    Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-                    clickPoint.z = sprite.bounds.center.z;
                     onDragEvent();
-                    CameraController.CANTRANS = false;
-                    this.transform.position = clickPoint;
+                    Vector2 delta = Input.GetTouch(0).deltaPosition;
+                    Vector3 newPos = new Vector3(transform.position.x + delta.x / 200, 
+                        transform.position.y + delta.y / 200, transform.position.z);
+                    transform.position = newPos;
                 }
             }
 
+            //Make the draging thing fly back to old pos
             if (isBacking)
             {
                 Vector3 pos = Vector3.SmoothDamp(
