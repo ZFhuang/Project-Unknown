@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
+  - 
   - 
   - 
   - 
@@ -40,4 +40,28 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: MainBackground
+    uniqueID: 2557323989
+    locked: 0
+  - name: MainBackground_Fore
+    uniqueID: 1270657657
+    locked: 0
+  - name: SubBackground
+    uniqueID: 1773497113
+    locked: 0
+  - name: SubObjects
+    uniqueID: 3175699573
+    locked: 0
+  - name: SubObjects_Fore
+    uniqueID: 830687453
+    locked: 0
+  - name: SubForeground
+    uniqueID: 1846887509
+    locked: 0
+  - name: MainForeground
+    uniqueID: 3058638467
+    locked: 0
+  - name: UI
+    uniqueID: 3989469353
     locked: 0
