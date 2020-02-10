@@ -56,36 +56,43 @@ public class ClickCatcher : MonoBehaviour
 #endif
     }
 
-    private void FixedUpdate()
+    public void OnMouseDown()
     {
         if (localOrder == CameraController.ORDER)
         {
-            if (platform == PLATFORM.STANDALONE)
-            {
-                //Get click mouse button down
-                if (Input.GetMouseButtonDown(0))
-                {
-                    Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    mousePoint.z = spriteBounds.center.z;
-                    if (spriteBounds.Contains(mousePoint))
-                    {
-                        clickEvent();
-                    }
-                }
-            }
-            else
-            {
-                //Get touch Stationary to prevent wrong actions
-                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Stationary)
-                {
-                    Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
-                    clickPoint.z = spriteBounds.center.z;
-                    if (spriteBounds.Contains(clickPoint))
-                    {
-                        clickEvent();
-                    }
-                }
-            }
+            clickEvent();
         }
+
+        //    private void FixedUpdate()
+        //{
+        //    if (localOrder == CameraController.ORDER)
+        //    {
+        //        if (platform == PLATFORM.STANDALONE)
+        //        {
+        //            //Get click mouse button down
+        //            if (Input.GetMouseButtonDown(0))
+        //            {
+        //                Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //                mousePoint.z = spriteBounds.center.z;
+        //                if (spriteBounds.Contains(mousePoint))
+        //                {
+        //                    clickEvent();
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            //Get touch Stationary to prevent wrong actions
+        //            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Stationary)
+        //            {
+        //                Vector3 clickPoint = Camera.main.ScreenToWorldPoint(Input.touches[0].position);
+        //                clickPoint.z = spriteBounds.center.z;
+        //                if (spriteBounds.Contains(clickPoint))
+        //                {
+        //                    clickEvent();
+        //                }
+        //            }
+        //        }
+        //    }
     }
 }

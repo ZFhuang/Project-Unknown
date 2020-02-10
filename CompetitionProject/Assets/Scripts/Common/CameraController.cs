@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public partial class CameraController : MonoBehaviour
 {
     public static bool CANTRANS = true;
-    public static int ORDER=0;
+    public static int ORDER = 0;
 
     enum PLATFORM
     {
@@ -13,23 +13,11 @@ public class CameraController : MonoBehaviour
         PHONE = 1
     }
     private PLATFORM platform = PLATFORM.PHONE;
-
-    //Camera's state machine settings
-    enum STATE
-    {
-        SLIDE = 0,
-        TOUCH = 1,
-        MOVE = 2,
-        ZOOM = 3,
-        MOVE_ZOOM = 4,
-        IDLE = 5
-    }
     private STATE camState = STATE.IDLE;
 
     public float zoomTime = 20f;
     public float zoomScale = 2f;
 
-    [SerializeField]
     private SpriteRenderer backgoundBounder;
     private bool mousePressing = false;
     //Camera move speed
@@ -118,7 +106,8 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         mCam = Camera.main;
-        
+        backgoundBounder = gameObject.GetComponent<SpriteRenderer>();
+
         //Init options
         loadCamSettings();
         //Init deadzone
@@ -144,6 +133,18 @@ public class CameraController : MonoBehaviour
         platform = PLATFORM.STANDALONE;
         Debug.Log("UNITY_EDITOR.STANDALONE");
 #endif
+    }
+
+    private void OnMouseDown()
+    {
+        //Debug.Log("Mouse Left DOWN!");
+        mousePressing = true;
+    }
+
+    private void OnMouseUp()
+    {
+        //Debug.Log("Mouse Left UP!");
+        mousePressing = false;
     }
 
     //Using FixedUpdate to make sure the game will stop when timescale = 0
@@ -198,18 +199,6 @@ public class CameraController : MonoBehaviour
     //Camera moving method for Windows, Linux, OSX
     private void cameraTranlate_STANDALONE()
     {
-        //On mouse down
-        if (Input.GetMouseButtonDown(0))
-        {
-            //Debug.Log("Mouse Left DOWN!");
-            mousePressing = true;
-        }
-        //On mouse up
-        if (Input.GetMouseButtonUp(0))
-        {
-            //Debug.Log("Mouse Left UP!");
-            mousePressing = false;
-        }
         //On mouse pressing
         if (mousePressing)
         {
