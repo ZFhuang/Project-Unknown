@@ -21,6 +21,7 @@ public class SceneChanger : MonoBehaviour
     {
         blackScreen.Play("BlackOut");
         yield return new WaitForSeconds(.5f);
+        blackScreen.Rebind();
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }
