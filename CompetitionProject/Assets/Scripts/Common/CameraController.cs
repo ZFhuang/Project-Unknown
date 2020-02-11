@@ -43,12 +43,12 @@ public partial class CameraController : MonoBehaviour
         {
             PlayerPrefs.SetFloat("speed", 0.5f);
             speed = 0.5f;
-            Debug.Log(this.gameObject + " init speed: " + speed);
+            //Debug.Log(this.gameObject + " init speed: " + speed);
         }
         else if (PlayerPrefs.HasKey("speed"))
         {
             speed = PlayerPrefs.GetFloat("speed");
-            Debug.Log(this.gameObject + " load speed: " + speed);
+            //Debug.Log(this.gameObject + " load speed: " + speed);
         }
     }
 
@@ -121,7 +121,7 @@ public partial class CameraController : MonoBehaviour
 
 #if UNITY_ANDROID
         platform = PLATFORM.PHONE;
-        Debug.Log("UNITY_ANDROID.PHONE");
+        //Debug.Log("UNITY_ANDROID.PHONE");
 #endif
 
 #if UNITY_IPHONE
@@ -131,7 +131,7 @@ public partial class CameraController : MonoBehaviour
 
 #if UNITY_EDITOR
         platform = PLATFORM.STANDALONE;
-        Debug.Log("UNITY_EDITOR.STANDALONE");
+        //Debug.Log("UNITY_EDITOR.STANDALONE");
 #endif
     }
 
@@ -235,7 +235,7 @@ public partial class CameraController : MonoBehaviour
     }
 
     //Pack the camera position translate function to restrict the position
-    private void cameraPositionTrans(float x, float y)
+    public void cameraPositionTrans(float x, float y)
     {
         if (CANTRANS)
         {

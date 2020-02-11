@@ -56,7 +56,7 @@ public class ClickCatcher : MonoBehaviour
 #endif
     }
 
-    public void OnMouseDown()
+    private void OnMouseDown()
     {
         if (localOrder == CameraController.ORDER)
         {

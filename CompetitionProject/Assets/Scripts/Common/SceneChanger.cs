@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    [SerializeField] private string sceneName;
-    [SerializeField] private Animator blackScreen;
+    private string sceneName;
+    private Animator blackScreen;
 
     //react mouse down
-    public void OnMouseDown()
+    private void OnMouseDown()
     {
         Debug.Log("Loading scene: " + sceneName);
         blackScreen.gameObject.SetActive(true);
@@ -23,5 +23,11 @@ public class SceneChanger : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         blackScreen.Rebind();
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+    private void Start()
+    {
+        sceneName = gameObject.name;
+        blackScreen = GameObject.FindGameObjectWithTag("blackScreen").GetComponent<Animator>();
     }
 }
