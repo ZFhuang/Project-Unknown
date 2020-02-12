@@ -54,7 +54,7 @@ public class PickupObject : MonoBehaviour
 
     private void Start()
     {
-        toolHub = GameObject.FindGameObjectWithTag("toolHub").GetComponent<ToolHub>();
+        toolHub = GameObject.Find("ToolMenu").GetComponent<ToolHub>();
         oldScale = gameObject.transform.localScale;
     }
 

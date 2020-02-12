@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - toolHub
-  - blackScreen
   - global
+  - blackScreen
   layers:
   - Default
   - TransparentFX

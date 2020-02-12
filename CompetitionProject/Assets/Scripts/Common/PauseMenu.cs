@@ -9,12 +9,36 @@ public class PauseMenu : MonoBehaviour
     public void pauseGame()
     {
         Time.timeScale = 0f;
+        GameObject[] gameObjects = GameObject.FindObjectsOfType<GameObject>();
+        BoxCollider2D b;
+        foreach (GameObject g in gameObjects)
+        {
+            if (g.tag != "global")
+            {
+                if (g.TryGetComponent<BoxCollider2D>(out b))
+                {
+                    b.enabled = false;
+                }
+            }
+        }
     }
 
     //Resume the game by setting the timeScale to 1
     public void resumeGame()
     {
         Time.timeScale = 1f;
+        GameObject[] gameObjects = GameObject.FindObjectsOfType<GameObject>();
+        BoxCollider2D b;
+        foreach (GameObject g in gameObjects)
+        {
+            if (g.tag != "global")
+            {
+                if (g.TryGetComponent<BoxCollider2D>(out b))
+                {
+                    b.enabled = true;
+                }
+            }
+        }
     }
 
     public void quitGame()

@@ -28,6 +28,6 @@ public class SceneChanger : MonoBehaviour
     private void Start()
     {
         sceneName = gameObject.name;
-        blackScreen = GameObject.FindGameObjectWithTag("blackScreen").GetComponent<Animator>();
+        blackScreen = GameObject.Find("BlackScreen").GetComponent<Animator>();
     }
 }
