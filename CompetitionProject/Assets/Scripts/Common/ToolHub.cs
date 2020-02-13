@@ -81,7 +81,7 @@ public class ToolHub : MonoBehaviour
     //Called by clicking the button
     public void selectObject(int num)
     {
-        if (num >= 0 && num <= 6 && objectsValid[num] == true)
+        if (num >= 0 && num < 6 && objectsValid[num] == true)
         {
             selecting = num;
             refreshToolHub();
@@ -91,7 +91,7 @@ public class ToolHub : MonoBehaviour
     //Return the selecting object's name for checking
     public string getSelectingName()
     {
-        if (selecting >= 0 && selecting <= 6 && objectsValid[selecting] == true)
+        if (selecting >= 0 && selecting < 6 && objectsValid[selecting] == true)
         {
             return objects[selecting].name;
         }
@@ -119,14 +119,12 @@ public class ToolHub : MonoBehaviour
     {
         if (isDown)
         {
-            Debug.Log("UP");
             isDown = false;
             toolHubAni.SetBool("isDown", isDown);
             exHubAni.SetBool("isDown", isDown);
         }
         else
         {
-            Debug.Log("DOWN");
             isDown = true;
             toolHubAni.SetBool("isDown", isDown);
             exHubAni.SetBool("isDown", isDown);

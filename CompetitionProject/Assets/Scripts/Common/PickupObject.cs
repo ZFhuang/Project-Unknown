@@ -14,6 +14,7 @@ public class PickupObject : MonoBehaviour
     private float scale=2f;
     private float waitTime = 0.7f;
     private ToolHub toolHub;
+    private IllustrationMenu IlluMenu;
 
     public void setCanPick(bool input)
     {
@@ -42,6 +43,13 @@ public class PickupObject : MonoBehaviour
         {
             toolHub.addObject(gameObject);
         }
+        if (IlluMenu != null)
+        {
+            if (IlluMenu.addObject(gameObject.name))
+            {
+                Debug.Log("Get new Illu");
+            }
+        }
     }
 
     private void OnMouseDown()
@@ -55,6 +63,7 @@ public class PickupObject : MonoBehaviour
     private void Start()
     {
         toolHub = GameObject.Find("ToolMenu").GetComponent<ToolHub>();
+        IlluMenu= GameObject.Find("FuncButton").GetComponent<IllustrationMenu>();
         oldScale = gameObject.transform.localScale;
     }
 
