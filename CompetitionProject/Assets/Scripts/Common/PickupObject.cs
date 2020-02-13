@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class PickupObject : MonoBehaviour
 {
-    private bool canPick=true;
+    [SerializeField] private bool hasItem;
+    [SerializeField] private bool isTool;
+
+    private bool canPick = true;
     private bool isAnimating;
     private Vector3 _speed;
     private Vector3 _speed2;
     private Vector3 oldScale;
     private Vector3 oldTarget;
-    private float _time=0.3f;
-    private float scale=2f;
+    private float _time = 0.3f;
+    private float scale = 2f;
     private float waitTime = 0.7f;
     private ToolHub toolHub;
     private IllustrationMenu IlluMenu;
@@ -30,20 +33,20 @@ public class PickupObject : MonoBehaviour
     {
         //Start animation and wait
         isAnimating = true;
-        oldTarget = Camera.main.transform.position; 
+        oldTarget = Camera.main.transform.position;
         yield return new WaitForSeconds(waitTime);
         isAnimating = false;
         addToList();
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     private void addToList()
     {
-        if (toolHub != null)
+        if (isTool && toolHub != null)
         {
             toolHub.addObject(gameObject);
         }
-        if (IlluMenu != null)
+        if (hasItem && IlluMenu != null)
         {
             if (IlluMenu.addObject(gameObject.name))
             {
@@ -63,7 +66,7 @@ public class PickupObject : MonoBehaviour
     private void Start()
     {
         toolHub = GameObject.Find("ToolMenu").GetComponent<ToolHub>();
-        IlluMenu= GameObject.Find("FuncButton").GetComponent<IllustrationMenu>();
+        IlluMenu = GameObject.Find("FuncButton").GetComponent<IllustrationMenu>();
         oldScale = gameObject.transform.localScale;
     }
 

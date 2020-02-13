@@ -152,7 +152,7 @@ Transform:
   - {fileID: 967333124}
   - {fileID: 1499564194}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &967333123
 GameObject:
@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 967333124}
   - component: {fileID: 967333125}
   - component: {fileID: 967333127}
+  - component: {fileID: 967333128}
   - component: {fileID: 967333126}
   m_Layer: 0
   m_Name: Man
@@ -248,6 +249,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43fd30c54912234c8d62687fe3d1fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasItem: 0
+  isTool: 0
 --- !u!61 &967333127
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -274,6 +277,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 46.08, y: 25.92}
   m_EdgeRadius: 0
+--- !u!114 &967333128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967333123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ceb5d8484754844a48b6f9618bf015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1294018183 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 535790927396126713, guid: 3414d6667f7970f449ac358bdbe8c027,
@@ -400,6 +415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43fd30c54912234c8d62687fe3d1fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasItem: 0
+  isTool: 0
 --- !u!1 &2044852070
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,7 +658,7 @@ PrefabInstance:
     - target: {fileID: 7097564579214521238, guid: 63db05c4093cd8949b091d96240d50d4,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7097564579214521238, guid: 63db05c4093cd8949b091d96240d50d4,
         type: 3}
@@ -658,5 +675,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7097564579214521239, guid: 63db05c4093cd8949b091d96240d50d4,
+        type: 3}
+      propertyPath: prefab_SAL
+      value: 
+      objectReference: {fileID: 8122207044755537293, guid: e0ce5e0d483d9e747bfc4c8506572257,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63db05c4093cd8949b091d96240d50d4, type: 3}

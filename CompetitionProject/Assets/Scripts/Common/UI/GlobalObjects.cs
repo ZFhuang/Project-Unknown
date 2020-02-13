@@ -9,6 +9,7 @@ public class GlobalObjects : MonoBehaviour
     [SerializeField] private GameObject prefab_MainEventSystem;
     [SerializeField] private GameObject prefab_MainAudio;
     [SerializeField] private GameObject prefab_UI;
+    [SerializeField] private GameObject prefab_SAL;
 
     private GameObject g;
 
@@ -45,6 +46,13 @@ public class GlobalObjects : MonoBehaviour
         }
         //Set the render camera
         g.GetComponent<Canvas>().worldCamera=Camera.main;
+        DontDestroyOnLoad(g);
+
+        g = GameObject.Find("SaveAndLoad");
+        if (g == null)
+        {
+            g = Instantiate(prefab_SAL);
+        }
         DontDestroyOnLoad(g);
     }
 }

@@ -51,3 +51,5 @@ MonoBehaviour:
     type: 3}
   prefab_UI: {fileID: 3093327281548528903, guid: 834837db424b34641925a2229219d599,
     type: 3}
+  prefab_SAL: {fileID: 8122207044755537293, guid: e0ce5e0d483d9e747bfc4c8506572257,
+    type: 3}
