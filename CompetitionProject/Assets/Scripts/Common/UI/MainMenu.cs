@@ -5,11 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] private SaveAndLoad saver;
+    private Animator blackScreen;
 
     public void playGame()
     {
-        //Load the next scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //Load the target scene
+        blackScreen.gameObject.SetActive(true);
+        StartCoroutine(changeScene());
+    }
+
+    private IEnumerator changeScene()
+    {
+        blackScreen.Play("BlackOut");
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(saver.getSceneName(), LoadSceneMode.Single);
     }
 
     public void quitGame()
@@ -21,5 +31,10 @@ public class MainMenu : MonoBehaviour
 #endif
         //quit
         Application.Quit();
+    }
+
+    private void Start()
+    {
+        blackScreen = GameObject.Find("BlackScreen").GetComponent<Animator>();
     }
 }

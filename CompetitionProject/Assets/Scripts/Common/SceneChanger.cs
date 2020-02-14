@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
+    private SaveAndLoad saver;
     private string sceneName;
     private Animator blackScreen;
 
@@ -20,12 +21,14 @@ public class SceneChanger : MonoBehaviour
     private IEnumerator changeScene()
     {
         blackScreen.Play("BlackOut");
+        saver = GameObject.Find("SaveAndLoad(Clone)").GetComponent<SaveAndLoad>();
         yield return new WaitForSeconds(.5f);
         blackScreen.Rebind();
+        saver.sceneChange(sceneName);
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
-    private void Start()
+    private void Awake()
     {
         sceneName = gameObject.name;
         blackScreen = GameObject.Find("BlackScreen").GetComponent<Animator>();

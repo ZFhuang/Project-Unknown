@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scene01_Man : MonoBehaviour
+public class Scene01_scene02 : MonoBehaviour
 {
     private int state;
     SaveAndLoad saver;
-    ToolHub toolHub;
 
-    private void OnMouseDown()
+    public void show()
     {
-        if (state == 0 && toolHub.getSelectingName() == "Book")
-        {
-            toolHub.useSelectingObject();
-            state = 1;
-            Destroy(gameObject);
-        }
+        state = 1;
+        gameObject.SetActive(true);
     }
 
     private void Save()
@@ -25,19 +20,19 @@ public class Scene01_Man : MonoBehaviour
 
     private void Load()
     {
-        state=saver.loadState(gameObject.name);
+        state = saver.loadState(gameObject.name);
         Debug.Log(gameObject.name + " state: " + state);
     }
 
     // Start is called before the first frame update
-    private void Start()
+    void Start()
     {
+        gameObject.SetActive(false);
         saver = GameObject.Find("SaveAndLoad(Clone)").GetComponent<SaveAndLoad>();
-        toolHub = GameObject.Find("ToolMenu").GetComponent<ToolHub>();
         Load();
-        if (state > 0)
+        if (state == 1)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(true);
         }
     }
 

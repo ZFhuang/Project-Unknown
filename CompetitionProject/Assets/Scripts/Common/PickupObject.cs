@@ -6,8 +6,8 @@ public class PickupObject : MonoBehaviour
 {
     [SerializeField] private bool hasItem;
     [SerializeField] private bool isTool;
+    [SerializeField] private bool canPick;
 
-    private bool canPick = true;
     private bool isAnimating;
     private Vector3 _speed;
     private Vector3 _speed2;

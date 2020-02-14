@@ -8,10 +8,9 @@ public class GameData
 {
     //Use Dictionary to save different scene's object state
     public Dictionary<string, int>[] scene;
-
     public float musicVol = 50;
     public float speedVol = 50;
-    public int currentSceneIdx;
+    public string currentSceneName;
     public string[] tools;
     public bool[] itemIlluValid;
 
@@ -24,5 +23,6 @@ public class GameData
         tools = new string[toolSum];
         itemIlluValid = new bool[itemSum];
         scene = new Dictionary<string, int>[sceneSum];
+        currentSceneName = "Scene01";
     }
 }

@@ -2117,7 +2117,7 @@ GameObject:
   - component: {fileID: 3068927378040407325}
   - component: {fileID: 1536734516510101599}
   m_Layer: 5
-  m_Name: Object3
+  m_Name: Hat
   m_TagString: global
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

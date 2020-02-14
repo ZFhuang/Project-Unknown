@@ -10,7 +10,6 @@ public class SaveAndLoad : MonoBehaviour
     [SerializeField] GameObject UI;
     private ToolHub toolHub;
     private IllustrationMenu illustrationMenu;
-
     private static GameData currentData;
 
     //Load value stored by objects, using buildIndex to identify the scene
@@ -36,6 +35,16 @@ public class SaveAndLoad : MonoBehaviour
             currentData.scene[SceneManager.GetActiveScene().buildIndex].Remove(name);
         }
         currentData.scene[SceneManager.GetActiveScene().buildIndex].Add(name, state);
+    }
+
+    public void sceneChange(string sceneName)
+    {
+        currentData.currentSceneName = sceneName;
+    }
+
+    public string getSceneName()
+    {
+        return currentData.currentSceneName;
     }
 
     public void saveTools()
@@ -108,6 +117,8 @@ public class SaveAndLoad : MonoBehaviour
             FileStream file = File.Create(Application.persistentDataPath + "/save.dat");
             Debug.Log("Create new data");
             gameData = new GameData();
+            if (gameData.currentSceneName == null)
+                gameData.currentSceneName = "Scene01";
             file.Close();
         }
         else
@@ -118,12 +129,16 @@ public class SaveAndLoad : MonoBehaviour
                 Debug.Log("Empty file");
                 Debug.Log("Create new data");
                 gameData = new GameData();
+                if (gameData.currentSceneName == null)
+                    gameData.currentSceneName = "Scene01";
                 file.Close();
             }
             else
             {
                 gameData = (GameData)bf.Deserialize(file);
                 file.Close();
+                if (gameData.currentSceneName == null)
+                    gameData.currentSceneName = "Scene01";
                 Debug.Log("Load data");
             }
         }
@@ -133,6 +148,7 @@ public class SaveAndLoad : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         currentData = new GameData();
         loadData(ref currentData);
     }
@@ -140,6 +156,7 @@ public class SaveAndLoad : MonoBehaviour
     private void Start()
     {
         illustrationMenu = UI.GetComponentInChildren<IllustrationMenu>();
+        //SceneManager.LoadScene(currentData.currentSceneName, LoadSceneMode.Single);
     }
 
     private void OnDestroy()
