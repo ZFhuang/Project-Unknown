@@ -36,11 +36,11 @@ public class PickupObject : MonoBehaviour
         oldTarget = Camera.main.transform.position;
         yield return new WaitForSeconds(waitTime);
         isAnimating = false;
-        addToList();
+        addToTool();
         Destroy(gameObject);
     }
 
-    private void addToList()
+    private void addToTool()
     {
         if (isTool && toolHub != null)
         {

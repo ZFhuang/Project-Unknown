@@ -48,7 +48,7 @@ public class GlobalObjects : MonoBehaviour
         g.GetComponent<Canvas>().worldCamera=Camera.main;
         DontDestroyOnLoad(g);
 
-        g = GameObject.Find("SaveAndLoad");
+        g = GameObject.Find("SaveAndLoad(Clone)");
         if (g == null)
         {
             g = Instantiate(prefab_SAL);

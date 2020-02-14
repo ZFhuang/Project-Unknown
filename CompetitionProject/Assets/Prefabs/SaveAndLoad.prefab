@@ -43,6 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebffb28c74caec49a7544937fc8b10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentData:
-    musicVol: 50
-    speedVol: 50
+  UI: {fileID: 3093327281548528903, guid: 834837db424b34641925a2229219d599, type: 3}

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ToolHub : MonoBehaviour
 {
+    [SerializeField] private IllustrationMenu illustration;
+    [SerializeField] private SaveAndLoad saver;
     [SerializeField] private Animator toolHubAni;
     [SerializeField] private Animator exHubAni;
     [SerializeField] private GameObject _object0;
@@ -39,6 +41,15 @@ public class ToolHub : MonoBehaviour
             }
         }
 
+        for (int i = sum; i < 6; i++)
+        {
+            if (!objectsValid[i])
+            {
+                objects[i].name = null;
+                objects[i].GetComponent<Image>().sprite = null;
+            }
+        }
+
         //Choose a capble color
         for (int i = 0; i < 6; i++)
         {
@@ -62,17 +73,36 @@ public class ToolHub : MonoBehaviour
     }
 
     //Add a new object to hub
-    public bool addObject(GameObject input)
+    public bool addObject(string name)
+    {
+        if (name == "")
+        {
+            return false;
+        }
+        else if (sum < 6)
+        {
+            objectsValid[sum] = true;
+            objects[sum].name = name;
+            objects[sum].GetComponent<Image>().sprite = illustration.GetSprite(name);
+            sum += 1;
+            refreshToolHub();
+            Debug.Log("Toolhub add: " + name);
+            return true;
+        }
+        return false;
+    }
+
+    //Add a new object to hub
+    public bool addObject(GameObject gameObject)
     {
         if (sum < 6)
         {
             objectsValid[sum] = true;
-            objects[sum].name = input.name;
-            objects[sum].GetComponent<Image>().sprite =
-                               input.GetComponent<SpriteRenderer>().sprite;
+            objects[sum].name = gameObject.name;
+            objects[sum].GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
             sum += 1;
             refreshToolHub();
-            Debug.Log("Toolhub add: " + gameObject.name);
+            Debug.Log("Toolhub add: " + name);
             return true;
         }
         return false;
@@ -86,6 +116,25 @@ public class ToolHub : MonoBehaviour
             selecting = num;
             refreshToolHub();
         }
+    }
+
+    //Return the target object's name for checking
+    public string getToolName(int idx)
+    {
+        if (idx >= 0 && idx < 6 && objectsValid[idx] == true)
+        {
+            return objects[idx].name;
+        }
+        return null;
+    }
+
+    public Sprite getToolSprite(int idx)
+    {
+        if (idx >= 0 && idx < 6 && objectsValid[idx] == true)
+        {
+            return objects[idx].GetComponent<Image>().sprite;
+        }
+        return null;
     }
 
     //Return the selecting object's name for checking
@@ -147,6 +196,12 @@ public class ToolHub : MonoBehaviour
         selecting = -1;
         sum = 0;
 
+        saver.loadTools();
         refreshToolHub();
+    }
+
+    private void OnDestroy()
+    {
+        saver.saveTools();
     }
 }

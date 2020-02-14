@@ -7,33 +7,77 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class SaveAndLoad : MonoBehaviour
 {
-    public GameData currentData;
+    [SerializeField] GameObject UI;
+    private ToolHub toolHub;
+    private IllustrationMenu illustrationMenu;
+
+    private static GameData currentData;
 
     //Load value stored by objects, using buildIndex to identify the scene
     public int loadState(string name)
     {
         int val;
-        if (currentData.scene[SceneManager.GetActiveScene().buildIndex].TryGetValue(name, out val))
-        {
-            Debug.Log(gameObject.name + " state: " + val);
-        }
-        else
+        if (currentData.scene[SceneManager.GetActiveScene().buildIndex] == null)
+            currentData.scene[SceneManager.GetActiveScene().buildIndex] = new Dictionary<string, int>();
+        if (!currentData.scene[SceneManager.GetActiveScene().buildIndex].TryGetValue(name, out val))
         {
             val = 0;
-            Debug.Log(gameObject.name + " create state: " + val);
         }
         return val;
     }
 
     //Save value for objects, using buildIndex to identify the scene
-    public void saveState(string name,int state)
+    public void saveState(string name, int state)
     {
+        if (currentData.scene[SceneManager.GetActiveScene().buildIndex] == null)
+            currentData.scene[SceneManager.GetActiveScene().buildIndex] = new Dictionary<string, int>();
         if (currentData.scene[SceneManager.GetActiveScene().buildIndex].ContainsKey(name))
         {
             currentData.scene[SceneManager.GetActiveScene().buildIndex].Remove(name);
         }
         currentData.scene[SceneManager.GetActiveScene().buildIndex].Add(name, state);
-        Debug.Log(name + " save state: " + state);
+    }
+
+    public void saveTools()
+    {
+        if (toolHub == null)
+            toolHub = GameObject.Find("ToolMenu").GetComponent<ToolHub>();
+
+        for (int i = 0; i < GameData.toolSum; i++)
+        {
+            currentData.tools[i] = toolHub.getToolName(i);
+        }
+    }
+
+    public void loadTools()
+    {
+        if (toolHub == null)
+            toolHub = GameObject.Find("ToolMenu").GetComponent<ToolHub>();
+
+        for (int i = 0; i < GameData.toolSum; i++)
+        {
+            if (currentData.tools[i] == null)
+            {
+                currentData.tools[i] = "";
+            }
+            toolHub.addObject(currentData.tools[i]);
+        }
+    }
+
+    public void saveIllu()
+    {
+        for (int i = 0; i < GameData.itemSum; i++)
+        {
+            currentData.itemIlluValid[i] = IllustrationMenu.objectsValid[i];
+        }
+    }
+
+    public void loadIllu(ref bool[] inp)
+    {
+        for (int i = 0; i < GameData.itemSum; i++)
+        {
+            inp[i] = currentData.itemIlluValid[i];
+        }
     }
 
     //Save the whole data
@@ -56,16 +100,15 @@ public class SaveAndLoad : MonoBehaviour
 
     //Load the data, may create new file in Application.persistentDataPath + "/save.dat"
     //Application.persistentDataPath is C:\Users\*\AppData\LocalLow\*\*\
-    public GameData loadData()
+    public void loadData(ref GameData gameData)
     {
         BinaryFormatter bf = new BinaryFormatter();
         if (!File.Exists(Application.persistentDataPath + "/save.dat"))
         {
             FileStream file = File.Create(Application.persistentDataPath + "/save.dat");
             Debug.Log("Create new data");
-            GameData gameData = new GameData();
+            gameData = new GameData();
             file.Close();
-            return gameData;
         }
         else
         {
@@ -74,25 +117,29 @@ public class SaveAndLoad : MonoBehaviour
             {
                 Debug.Log("Empty file");
                 Debug.Log("Create new data");
-                GameData gameData = new GameData();
+                gameData = new GameData();
                 file.Close();
-                return gameData;
             }
             else
             {
-                GameData gameData = (GameData)bf.Deserialize(file);
+                gameData = (GameData)bf.Deserialize(file);
                 file.Close();
                 Debug.Log("Load data");
-                return gameData;
             }
         }
     }
 
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
-        currentData = loadData();
+        currentData = new GameData();
+        loadData(ref currentData);
+    }
+
+    private void Start()
+    {
+        illustrationMenu = UI.GetComponentInChildren<IllustrationMenu>();
     }
 
     private void OnDestroy()

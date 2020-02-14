@@ -10,6 +10,7 @@ public class IllustrationMenu : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI itemName;
     [SerializeField] private Image image;
     [SerializeField] private IluustrationFast iluustrationFast;
+    [SerializeField] private SaveAndLoad saver;
 
     [SerializeField] private GameObject _object0;
     [SerializeField] private GameObject _object1;
@@ -18,7 +19,7 @@ public class IllustrationMenu : MonoBehaviour
     [SerializeField] private GameObject _object4;
     [SerializeField] private GameObject _object5;
 
-    private bool[] objectsValid;
+    public static bool[] objectsValid;
     private GameObject[] objects;
     private int selecting;
     private int sum;
@@ -93,6 +94,18 @@ public class IllustrationMenu : MonoBehaviour
         return false;
     }
 
+    public Sprite GetSprite(string name)
+    {
+        for(int i = 0; i < sum; i++)
+        {
+            if (name == objects[i].name)
+            {
+                return objects[i].GetComponent<Image>().sprite;
+            }
+        }
+        return null;
+    }
+
     //Change main text content, this will load txt in Resources/Text
     private void loadText(string name)
     {
@@ -147,7 +160,13 @@ public class IllustrationMenu : MonoBehaviour
         objects[4] = _object4;
         objects[5] = _object5;
 
+        saver.loadIllu(ref objectsValid);
         selectObject(0);
         refreshScoller();
+    }
+
+    private void OnDestroy()
+    {
+        saver.saveIllu();
     }
 }

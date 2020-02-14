@@ -3805,6 +3805,7 @@ MonoBehaviour:
   itemName: {fileID: 8747323080726117555}
   image: {fileID: 5718630151031575326}
   iluustrationFast: {fileID: 3489373001112757459}
+  saver: {fileID: 8122207044755537292, guid: e0ce5e0d483d9e747bfc4c8506572257, type: 3}
   _object0: {fileID: 5152947564925503765}
   _object1: {fileID: 2315917671757266204}
   _object2: {fileID: 7443039173719898602}
@@ -5108,6 +5109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899896770f6a4a840b96d847c2c87955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  illustration: {fileID: 2031920397190361788}
+  saver: {fileID: 8122207044755537292, guid: e0ce5e0d483d9e747bfc4c8506572257, type: 3}
   toolHubAni: {fileID: 3093327281409402233}
   exHubAni: {fileID: 3093327279855077187}
   _object0: {fileID: 6956081374871254652}

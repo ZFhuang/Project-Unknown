@@ -166,7 +166,6 @@ GameObject:
   - component: {fileID: 967333125}
   - component: {fileID: 967333127}
   - component: {fileID: 967333128}
-  - component: {fileID: 967333126}
   m_Layer: 0
   m_Name: Man
   m_TagString: Untagged
@@ -237,20 +236,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &967333126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967333123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a43fd30c54912234c8d62687fe3d1fcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasItem: 0
-  isTool: 0
 --- !u!61 &967333127
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -415,8 +400,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43fd30c54912234c8d62687fe3d1fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasItem: 0
-  isTool: 0
+  hasItem: 1
+  isTool: 1
 --- !u!1 &2044852070
 GameObject:
   m_ObjectHideFlags: 0
