@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scene01_Hat : MonoBehaviour
+public class Scene01_Hat : SaverTemplate
 {
-    private int state;
-    SaveAndLoad saver;
     Animator animator;
 
     public void fly()
@@ -18,7 +16,7 @@ public class Scene01_Hat : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    private void pickUp()
     {
         if (state == 1)
         {
@@ -26,32 +24,16 @@ public class Scene01_Hat : MonoBehaviour
         }
     }
 
-    private void Save()
-    {
-        saver.saveState(gameObject.name, state);
-    }
-
-    private void Load()
-    {
-        state = saver.loadState(gameObject.name);
-        Debug.Log(gameObject.name + " state: " + state);
-    }
-
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        saver = GameObject.Find("SaveAndLoad(Clone)").GetComponent<SaveAndLoad>();
+        base.Start();
+
         animator = this.GetComponent<Animator>();
 
-        Load();
         if (state == 2)
         {
             Destroy(gameObject);
         }
-    }
-
-    private void OnDestroy()
-    {
-        Save();
     }
 }

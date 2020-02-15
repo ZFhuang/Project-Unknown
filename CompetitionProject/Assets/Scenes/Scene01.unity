@@ -389,7 +389,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasItem: 1
   isTool: 1
+  needTool: 0
   canPick: 0
+  tool: 
+  hasTarget: 1
+  targetObject: {fileID: 990185667}
 --- !u!212 &990185671
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -601,7 +605,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasItem: 1
   isTool: 0
+  needTool: 0
   canPick: 1
+  tool: 
+  hasTarget: 1
+  targetObject: {fileID: 1499564192}
 --- !u!114 &1499564197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,12 +805,12 @@ PrefabInstance:
     - target: {fileID: 535790927396126713, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.55
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 535790927396126713, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.28
+      value: -0.16
       objectReference: {fileID: 0}
     - target: {fileID: 535790927396126713, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}

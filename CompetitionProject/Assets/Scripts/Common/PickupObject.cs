@@ -7,6 +7,10 @@ public class PickupObject : MonoBehaviour
     [SerializeField] private bool hasItem;
     [SerializeField] private bool isTool;
     [SerializeField] private bool canPick;
+    [SerializeField] private bool needTool;
+    [SerializeField] private string tool;
+    [SerializeField] private bool hasTarget;
+    [SerializeField] private GameObject targetObject;
 
     private bool isAnimating;
     private Vector3 _speed;
@@ -55,11 +59,31 @@ public class PickupObject : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    private void OnMouseUp()
     {
         if (canPick)
         {
-            pickUp();
+            if (needTool)
+            {
+                if(toolHub.getSelectingName() == tool)
+                {
+                    if (hasTarget&&targetObject!=null)
+                    {
+                        targetObject.SendMessage("pickUp", SendMessageOptions.DontRequireReceiver);
+                    }
+                    toolHub.useSelectingObject();
+                    pickUp();
+                }
+            }
+            else
+            {
+                if (hasTarget && targetObject != null)
+                {
+                    Debug.Log("Send!");
+                    targetObject.SendMessage("pickUp", SendMessageOptions.DontRequireReceiver);
+                }
+                pickUp();
+            }
         }
     }
 

@@ -1989,7 +1989,7 @@ GameObject:
   - component: {fileID: 8201995243786448822}
   - component: {fileID: 1501808561028952509}
   m_Layer: 5
-  m_Name: Man
+  m_Name: Hat
   m_TagString: global
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2117,7 +2117,7 @@ GameObject:
   - component: {fileID: 3068927378040407325}
   - component: {fileID: 1536734516510101599}
   m_Layer: 5
-  m_Name: Hat
+  m_Name: Object3
   m_TagString: global
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8041,7 +8041,7 @@ GameObject:
   - component: {fileID: 1827070895899781722}
   - component: {fileID: 9092356816518472979}
   m_Layer: 5
-  m_Name: Object0
+  m_Name: Book
   m_TagString: global
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9836,7 +9836,7 @@ GameObject:
   - component: {fileID: 6132221313229287526}
   - component: {fileID: 1986499168116789097}
   m_Layer: 5
-  m_Name: Book
+  m_Name: Sickle
   m_TagString: global
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

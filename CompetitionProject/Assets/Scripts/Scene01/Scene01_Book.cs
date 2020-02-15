@@ -2,44 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scene01_Book : MonoBehaviour
+public class Scene01_Book : SaverTemplate
 {
-    private int state;
-    SaveAndLoad saver;
-
-    private void OnMouseDown()
+    private void pickUp()
     {
         if (state == 0)
         {
+            Debug.Log("Get!");
             state = 1;
         }
     }
 
-    private void Save()
-    {
-        saver.saveState(gameObject.name, state);
-    }
-
-    private void Load()
-    {
-        state = saver.loadState(gameObject.name);
-        Debug.Log(gameObject.name + " state: " + state);
-    }
-
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        saver = GameObject.Find("SaveAndLoad(Clone)").GetComponent<SaveAndLoad>();
+        base.Start();
 
-        Load();
         if (state == 1)
         {
             Destroy(gameObject);
         }
-    }
-
-    private void OnDestroy()
-    {
-        Save();
     }
 }
