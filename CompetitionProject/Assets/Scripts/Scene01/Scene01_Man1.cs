@@ -22,6 +22,7 @@ public class Scene01_Man1 : SaverTemplate
         if (toolHub.getSelectingName() == "Hat")
         {
             state = 2;
+            toolHub.useSelectingObject();
             scene02.GetComponent<Scene01_scene02>().show();
             Destroy(gameObject);
         }
@@ -34,6 +35,11 @@ public class Scene01_Man1 : SaverTemplate
 
         animator = this.GetComponent<Animator>();
         toolHub = GameObject.Find("ToolMenu").GetComponent<ToolHub>();
+
+        if (state == 1)
+        {
+            animator.SetInteger("state", state);
+        }
 
         if (state == 2)
         {

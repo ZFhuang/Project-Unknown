@@ -28,7 +28,7 @@ public class PickupObject : MonoBehaviour
         canPick = input;
     }
 
-    public void pickUp()
+    public void PickUp()
     {
         StartCoroutine(pickAnimate());
     }
@@ -59,7 +59,7 @@ public class PickupObject : MonoBehaviour
         }
     }
 
-    private void OnMouseUp()
+    private void OnMouseDown()
     {
         if (canPick)
         {
@@ -72,17 +72,16 @@ public class PickupObject : MonoBehaviour
                         targetObject.SendMessage("pickUp", SendMessageOptions.DontRequireReceiver);
                     }
                     toolHub.useSelectingObject();
-                    pickUp();
+                    PickUp();
                 }
             }
             else
             {
                 if (hasTarget && targetObject != null)
                 {
-                    Debug.Log("Send!");
                     targetObject.SendMessage("pickUp", SendMessageOptions.DontRequireReceiver);
                 }
-                pickUp();
+                PickUp();
             }
         }
     }

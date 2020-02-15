@@ -163,6 +163,25 @@ public class ToolHub : MonoBehaviour
         return false;
     }
 
+    //Use object in the hub by name
+    public bool useObjectByName(string name)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            if (objectsValid[i]&&objects[i].name==name)
+            {
+                objects[i].name = null;
+                objects[i].GetComponent<Image>().sprite = null;
+                sum -= 1;
+                objectsValid[i] = false;
+                selecting = -1;
+                refreshToolHub();
+                return true;
+            }
+        }
+        return false;
+    }
+
     //Hub's animations
     public void action()
     {

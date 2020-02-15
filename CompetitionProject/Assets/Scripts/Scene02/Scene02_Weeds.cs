@@ -4,32 +4,42 @@ using UnityEngine;
 
 public class Scene02_Weeds : SaverTemplate
 {
+    [SerializeField] GameObject scene03;
+
     private Vector3 lastPos;
+    private ToolHub toolHub;
 
     private void rightDrag()
     {
-        gameObject.transform.position = new Vector3(lastPos.x+1, lastPos.y, lastPos.z);
+        gameObject.transform.position = new Vector3(lastPos.x + 0.5f, lastPos.y, lastPos.z);
         if (state < 10)
         {
             state++;
         }
         else
         {
-            Destroy(gameObject);
+            end();
         }
     }
 
     private void leftDrag()
     {
-        gameObject.transform.position = new Vector3(lastPos.x - 1, lastPos.y, lastPos.z);
+        gameObject.transform.position = new Vector3(lastPos.x - 0.5f, lastPos.y, lastPos.z);
         if (state < 10)
         {
             state++;
         }
         else
         {
-            Destroy(gameObject);
+            end();
         }
+    }
+
+    private void end()
+    {
+        toolHub.useObjectByName("Sickle");
+        scene03.SetActive(true);
+        Destroy(gameObject);
     }
 
     protected override void Start()
@@ -37,10 +47,11 @@ public class Scene02_Weeds : SaverTemplate
         base.Start();
 
         lastPos = gameObject.transform.position;
+        toolHub = GameObject.Find("ToolMenu").GetComponent<ToolHub>();
 
         if (state >= 10)
         {
-            Destroy(gameObject);
+            end();
         }
     }
 }

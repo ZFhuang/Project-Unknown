@@ -149,8 +149,8 @@ Transform:
   m_Children:
   - {fileID: 273692397}
   - {fileID: 940744416}
-  - {fileID: 1160029863}
   - {fileID: 515710224}
+  - {fileID: 1160029863}
   - {fileID: 1049295731}
   - {fileID: 1674554465}
   - {fileID: 1529843642}
@@ -279,6 +279,12 @@ Transform:
   m_Father: {fileID: 185807670}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &377425343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 535790927396126715, guid: 3414d6667f7970f449ac358bdbe8c027,
+    type: 3}
+  m_PrefabInstance: {fileID: 515710223}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &515710223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -290,7 +296,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: bb7e18f9ab682bc45a0d5a71d3cab1ef,
+      objectReference: {fileID: 21300000, guid: 1e7443cd582f12142a604c14e6de3fab,
         type: 3}
     - target: {fileID: 535790927396126712, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
@@ -340,7 +346,7 @@ PrefabInstance:
     - target: {fileID: 535790927396126713, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 535790927396126713, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
@@ -360,7 +366,12 @@ PrefabInstance:
     - target: {fileID: 535790927396126715, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
       propertyPath: m_Name
-      value: scene04
+      value: scene03
+      objectReference: {fileID: 0}
+    - target: {fileID: 535790927396126715, guid: 3414d6667f7970f449ac358bdbe8c027,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3414d6667f7970f449ac358bdbe8c027, type: 3}
@@ -462,8 +473,8 @@ GameObject:
   - component: {fileID: 1049295731}
   - component: {fileID: 1049295733}
   - component: {fileID: 1049295734}
-  - component: {fileID: 1049295732}
   - component: {fileID: 1049295735}
+  - component: {fileID: 1049295732}
   m_Layer: 0
   m_Name: Weeds
   m_TagString: Untagged
@@ -501,10 +512,10 @@ MonoBehaviour:
   yRange: 0
   xDrag: 1
   yDrag: 0
-  hasTarget: 0
+  hasTarget: 1
   targetObject: {fileID: 1049295730}
-  needTool: 0
-  tool: 
+  needTool: 1
+  tool: Sickle
 --- !u!212 &1049295733
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -566,6 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4383ef75b5e724b4a9b2f3a76ee77fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scene03: {fileID: 377425343}
 --- !u!61 &1049295735
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -603,7 +615,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: bb7e18f9ab682bc45a0d5a71d3cab1ef,
+      objectReference: {fileID: 21300000, guid: 91b5744d926b34a40a91e547aa88e1b5,
         type: 3}
     - target: {fileID: 535790927396126712, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
@@ -653,7 +665,7 @@ PrefabInstance:
     - target: {fileID: 535790927396126713, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 535790927396126713, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
@@ -673,7 +685,12 @@ PrefabInstance:
     - target: {fileID: 535790927396126715, guid: 3414d6667f7970f449ac358bdbe8c027,
         type: 3}
       propertyPath: m_Name
-      value: scene03
+      value: scene04
+      objectReference: {fileID: 0}
+    - target: {fileID: 535790927396126715, guid: 3414d6667f7970f449ac358bdbe8c027,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3414d6667f7970f449ac358bdbe8c027, type: 3}
@@ -775,6 +792,7 @@ GameObject:
   - component: {fileID: 1674554466}
   - component: {fileID: 1674554467}
   - component: {fileID: 1674554468}
+  - component: {fileID: 1674554469}
   m_Layer: 0
   m_Name: Sickle
   m_TagString: Untagged
@@ -859,11 +877,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasItem: 1
   isTool: 1
-  needTool: 0
   canPick: 1
+  needTool: 0
   tool: 
-  hasTarget: 0
-  targetObject: {fileID: 0}
+  hasTarget: 1
+  targetObject: {fileID: 1674554464}
 --- !u!61 &1674554468
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -890,6 +908,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 11.52, y: 6.48}
   m_EdgeRadius: 0
+--- !u!114 &1674554469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674554464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de08cf5b1b8647e41acce133a326fa3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1877156317
 PrefabInstance:
   m_ObjectHideFlags: 0

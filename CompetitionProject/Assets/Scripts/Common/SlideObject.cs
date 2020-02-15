@@ -18,23 +18,92 @@ public class SlideObject : MonoBehaviour
     private bool upDrag;
     private bool downDrag;
     private ToolHub toolHub;
+    enum PLATFORM
+    {
+        STANDALONE = 0,
+        PHONE = 1
+    }
+    private PLATFORM platform;
 
     private void OnMouseDrag()
     {
+        Debug.Log(toolHub.getSelectingName());
         if (needTool)
         {
             if (toolHub.getSelectingName() == tool)
             {
-                drag();
+                if (platform == PLATFORM.STANDALONE)
+                {
+                    //For Windows, Linux, OSX
+                    drag_STANDALONE();
+                }
+                else
+                {
+                    //Temporarily for Android and iOS
+                    drag_PHONE();
+                }
             }
         }
         else
         {
-            drag();
+            if (platform == PLATFORM.STANDALONE)
+            {
+                //For Windows, Linux, OSX
+                drag_STANDALONE();
+            }
+            else
+            {
+                //Temporarily for Android and iOS
+                drag_PHONE();
+            }
         }
     }
 
-    private void drag()
+    private void drag_STANDALONE()
+    {
+        if (xDrag)
+        {
+            Debug.Log(Input.GetAxis("Mouse X"));
+
+            if (!rightDrag && Input.GetAxis("Mouse X") * 50 > xRange)
+            {
+                rightDrag = true;
+                leftDrag = false;
+                if (hasTarget && targetObject != null)
+                    targetObject.SendMessage("rightDrag", SendMessageOptions.DontRequireReceiver);
+                Debug.Log("rightDrag");
+            }
+            if (!leftDrag && Input.GetAxis("Mouse X") * 50 < xRange)
+            {
+                leftDrag = true;
+                rightDrag = false;
+                if (hasTarget && targetObject != null)
+                    targetObject.SendMessage("leftDrag", SendMessageOptions.DontRequireReceiver);
+                Debug.Log("leftDrag");
+            }
+        }
+        if (yDrag)
+        {
+            if (!upDrag && Input.GetAxis("Mouse Y") * 50 > yRange)
+            {
+                upDrag = true;
+                downDrag = false;
+                if (hasTarget && targetObject != null)
+                    targetObject.SendMessage("upDrag", SendMessageOptions.DontRequireReceiver);
+                Debug.Log("upDrag");
+            }
+            if (!downDrag && Input.GetAxis("Mouse Y") * 50 < yRange)
+            {
+                downDrag = true;
+                upDrag = false;
+                if (hasTarget && targetObject != null)
+                    targetObject.SendMessage("downDrag", SendMessageOptions.DontRequireReceiver);
+                Debug.Log("downDrag");
+            }
+        }
+    }
+
+    private void drag_PHONE()
     {
         if (xDrag)
         {
@@ -79,5 +148,25 @@ public class SlideObject : MonoBehaviour
     private void Start()
     {
         toolHub = GameObject.Find("ToolMenu").GetComponent<ToolHub>();
+
+#if UNITY_STANDALONE
+        platform = PLATFORM.STANDALONE;
+        Debug.Log("UNITY_STANDALONE.STANDALONE");
+#endif
+
+#if UNITY_ANDROID
+        platform = PLATFORM.PHONE;
+        //Debug.Log("UNITY_ANDROID.PHONE");
+#endif
+
+#if UNITY_IPHONE
+        platform = PLATFORM.PHONE;
+        Debug.Log("UNITY_IPHONE.PHONE");
+#endif
+
+#if UNITY_EDITOR
+        platform = PLATFORM.STANDALONE;
+        //Debug.Log("UNITY_EDITOR.STANDALONE");
+#endif
     }
 }

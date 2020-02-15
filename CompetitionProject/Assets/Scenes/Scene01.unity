@@ -389,8 +389,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasItem: 1
   isTool: 1
-  needTool: 0
   canPick: 0
+  needTool: 0
   tool: 
   hasTarget: 1
   targetObject: {fileID: 990185667}
@@ -605,8 +605,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hasItem: 1
   isTool: 0
-  needTool: 0
   canPick: 1
+  needTool: 0
   tool: 
   hasTarget: 1
   targetObject: {fileID: 1499564192}
@@ -670,7 +670,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1499564192}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0ad73c1686fd4347b3f79013c9899fe, type: 3}
+  m_Script: {fileID: 11500000, guid: de08cf5b1b8647e41acce133a326fa3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2044852070

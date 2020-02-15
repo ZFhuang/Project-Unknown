@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scene01_Book : SaverTemplate
+public class PickupOnceAndSave : SaverTemplate
 {
     private void pickUp()
     {
