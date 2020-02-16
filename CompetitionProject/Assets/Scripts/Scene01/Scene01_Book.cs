@@ -8,6 +8,7 @@ public class Scene01_Book : SaverTemplate
     {
         if (state == 0)
         {
+            Save();
             state = 1;
         }
     }

@@ -11,6 +11,7 @@ public class Scene01_Hat : SaverTemplate
         if (state == 0)
         {
             state = 1;
+            Save();
             gameObject.GetComponent<PickupObject>().setCanPick(true);
             animator.SetInteger("state", state);
         }
@@ -20,6 +21,7 @@ public class Scene01_Hat : SaverTemplate
     {
         if (state == 1)
         {
+            Save();
             state = 2;
         }
     }

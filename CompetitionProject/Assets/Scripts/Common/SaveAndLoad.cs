@@ -94,6 +94,7 @@ public class SaveAndLoad : MonoBehaviour
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.OpenWrite(Application.persistentDataPath + "/save.dat");
+
         if (save == null)
         {
             Debug.LogError("Saving Not Found");

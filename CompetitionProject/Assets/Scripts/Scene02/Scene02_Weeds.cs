@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Scene02_Weeds : SaverTemplate
 {
-    [SerializeField] GameObject scene03;
+    [SerializeField] Scene02_scene03 scene03;
 
     private Vector3 lastPos;
     private ToolHub toolHub;
@@ -37,8 +37,9 @@ public class Scene02_Weeds : SaverTemplate
 
     private void end()
     {
+        Save();
         toolHub.useObjectByName("Sickle");
-        scene03.SetActive(true);
+        scene03.show();
         Destroy(gameObject);
     }
 

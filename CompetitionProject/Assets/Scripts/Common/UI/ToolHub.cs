@@ -87,6 +87,7 @@ public class ToolHub : MonoBehaviour
             sum += 1;
             refreshToolHub();
             Debug.Log("Toolhub add: " + name);
+            saver.saveTools();
             return true;
         }
         return false;
@@ -102,7 +103,8 @@ public class ToolHub : MonoBehaviour
             objects[sum].GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
             sum += 1;
             refreshToolHub();
-            Debug.Log("Toolhub add: " + name);
+            Debug.Log("Toolhub add: " + gameObject.name);
+            saver.saveTools();
             return true;
         }
         return false;
@@ -158,6 +160,7 @@ public class ToolHub : MonoBehaviour
             objectsValid[selecting] = false;
             selecting = -1;
             refreshToolHub();
+            saver.saveTools();
             return true;
         }
         return false;
@@ -176,6 +179,7 @@ public class ToolHub : MonoBehaviour
                 objectsValid[i] = false;
                 selecting = -1;
                 refreshToolHub();
+                saver.saveTools();
                 return true;
             }
         }

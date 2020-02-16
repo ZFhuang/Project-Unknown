@@ -18,6 +18,8 @@ public class SlideObject : MonoBehaviour
     private bool upDrag;
     private bool downDrag;
     private ToolHub toolHub;
+    private Vector3 startPos;
+
     enum PLATFORM
     {
         STANDALONE = 0,
@@ -25,9 +27,14 @@ public class SlideObject : MonoBehaviour
     }
     private PLATFORM platform;
 
+    private void OnMouseDown()
+    {
+        startPos = Input.mousePosition;
+        Debug.Log(startPos);
+    }
+
     private void OnMouseDrag()
     {
-        Debug.Log(toolHub.getSelectingName());
         if (needTool)
         {
             if (toolHub.getSelectingName() == tool)
@@ -63,9 +70,7 @@ public class SlideObject : MonoBehaviour
     {
         if (xDrag)
         {
-            Debug.Log(Input.GetAxis("Mouse X"));
-
-            if (!rightDrag && Input.GetAxis("Mouse X") * 50 > xRange)
+            if (!rightDrag && Mathf.Abs(Input.mousePosition.x - startPos.x) > xRange)
             {
                 rightDrag = true;
                 leftDrag = false;
@@ -73,7 +78,7 @@ public class SlideObject : MonoBehaviour
                     targetObject.SendMessage("rightDrag", SendMessageOptions.DontRequireReceiver);
                 Debug.Log("rightDrag");
             }
-            if (!leftDrag && Input.GetAxis("Mouse X") * 50 < xRange)
+            if (!leftDrag && Mathf.Abs(Input.mousePosition.x - startPos.x) < xRange)
             {
                 leftDrag = true;
                 rightDrag = false;
@@ -84,7 +89,7 @@ public class SlideObject : MonoBehaviour
         }
         if (yDrag)
         {
-            if (!upDrag && Input.GetAxis("Mouse Y") * 50 > yRange)
+            if (!upDrag && Mathf.Abs(Input.mousePosition.y - startPos.y) > yRange)
             {
                 upDrag = true;
                 downDrag = false;
@@ -92,7 +97,7 @@ public class SlideObject : MonoBehaviour
                     targetObject.SendMessage("upDrag", SendMessageOptions.DontRequireReceiver);
                 Debug.Log("upDrag");
             }
-            if (!downDrag && Input.GetAxis("Mouse Y") * 50 < yRange)
+            if (!downDrag && Mathf.Abs(Input.mousePosition.y - startPos.y) < yRange)
             {
                 downDrag = true;
                 upDrag = false;

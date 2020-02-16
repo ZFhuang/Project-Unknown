@@ -87,6 +87,7 @@ public class IllustrationMenu : MonoBehaviour
                 refreshScoller();
                 iluustrationFast.show(objects[i].name, objects[i].name,
                     objects[i].GetComponent<Image>().sprite);
+                saver.saveIllu();
                 return true;
             }
         }

@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupOnceAndSave : SaverTemplate
+public class Scene02_scene03 : SaverTemplate
 {
-    private void pickUp()
+    public void show()
     {
-        if (state == 0)
-        {
-            Save();
-            state = 1;
-        }
+        state = 1;
+        Save();
+        gameObject.SetActive(true);
     }
 
     // Start is called before the first frame update
@@ -18,9 +16,10 @@ public class PickupOnceAndSave : SaverTemplate
     {
         base.Start();
 
+        gameObject.SetActive(false);
         if (state == 1)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(true);
         }
     }
 }

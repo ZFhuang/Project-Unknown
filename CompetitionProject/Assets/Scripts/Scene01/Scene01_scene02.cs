@@ -7,6 +7,7 @@ public class Scene01_scene02 : SaverTemplate
     public void show()
     {
         state = 1;
+        Save();
         gameObject.SetActive(true);
     }
 

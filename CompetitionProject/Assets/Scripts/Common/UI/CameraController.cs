@@ -188,12 +188,6 @@ public partial class CameraController : MonoBehaviour
                 mousePressing = false;
             }
         }
-
-        //Camera slide
-
-        //Camera zoom
-
-        //Camera move
     }
 
     //Camera moving method for Windows, Linux, OSX

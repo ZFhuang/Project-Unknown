@@ -26,6 +26,11 @@ public class SaverTemplate : MonoBehaviour
     }
 
     // Call on gameobject's destory
+    private void OnDisable()
+    {
+        Save();
+    }
+
     protected virtual void OnDestroy()
     {
         Save();
